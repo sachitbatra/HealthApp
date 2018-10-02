@@ -1,0 +1,45 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Assist</title>
+</head>
+
+<body>
+	<div class="main">
+    <h1> Instagram Clone</h1>
+    <h3>Sign Up</h3>
+  </div>
+
+  <div>
+    <form method="post">
+      {% csrf_token %}
+      <div>
+        <div>
+          <label for="name">Name: </label>
+          <input id="name" type="text" name="name" value={{ name }}>
+        </div>
+
+        <div>
+          <label for="email">Email: </label>
+          <input id="email" type="text" name="email_address" value={{ email_address }}>
+        </div>
+
+        <div>
+          <label for="password">Password: </label>
+          <input id="password" type="password" name="password" value={{ password }}>
+        </div>
+
+        <div>
+          <label for="age">Age: </label>
+          <input id="age" type="number" name="age" value={{ age }}>
+        </div>
+
+        <input type="submit" value="Sign Up">
+
+      </div>
+    </form>
+  </div>
