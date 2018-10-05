@@ -38,9 +38,9 @@ def login_view(request):
     if request.method == "GET":
         login_form = LogInForm()
 
-        if request.GET["msg"]:
+        if request.GET.get("msg") != None:
             from .message_codes import login_msg
-            message_code = request.GET["msg"]
+            message_code = request.GET.get("msg")
 
             return render(request, 'login.html', {'form': login_form, 'message': login_msg[message_code]})
         else:
