@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Health Assist</title>
+    </head>
+
+    <body>
+        <div class="main">
+        <h1>Health Assist</h1>
+        <h3>Log In</h3>
+        </div>
+
+        <div>
+            {{ message }}
+        </div>
+
+        <div>
+            <form method="post">
+              {% csrf_token %}
+              <div>
+                <div>
+                  <label for="email">Email: </label>
+                  <input id="email" type="text" name="email_address" value={{ email_address }}>
+                </div>
+
+                <div>
+                  <label for="password">Password: </label>
+                  <input id="password" type="password" name="password" value={{ password }}>
+                </div>
+
+                  <input type="submit" value="Log In">
+              </div>
+            </form>
+        </div>
+    </body>
+
+</html>

@@ -19,7 +19,7 @@ from django.conf.urls import url
 from authentication.views import *
 
 urlpatterns = [
-    #url('login', login_view),
+    url('login', login_view),
     url('signup', signup_view),
     url('', signup_view),  # Replace With HomePage
     path('admin/', admin.site.urls),
