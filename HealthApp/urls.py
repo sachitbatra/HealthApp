@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from authentication.views import *
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url('login', login_view),
     url('signup', signup_view),
+    url(r'^api/user', UserOperations.as_view()),
     url('', signup_view),  # Replace With HomePage
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

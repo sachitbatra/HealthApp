@@ -6,6 +6,48 @@ from .models import *
 from django.utils import timezone
 from datetime import timedelta
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import UserModelSerializer
+
+class UserOperations(APIView):
+    def get(self, request):
+        if request.GET.get("email") != None:
+            email = request.GET.get("email")
+            curUser = UserModel.objects.filter(email_address=email).first()
+
+            if curUser != None:
+                serializer = UserModelSerializer(curUser)
+                return Response(serializer.data)
+            else:
+                raise Http404
+        else:
+            raise Http404
+
+    def post(self, request):
+        fields = ['name', 'email_address', 'password', 'age', 'created_on']
+
+        input_json = json.loads(request.body)
+
+        for curField in fields:
+            if input_json[curField] == None:
+                raise Http404
+
+        user_name = input_json['name']
+        user_email = input_json['email']
+        user_password = input_json['password']
+        user_age = input_json['age']
+
+        existing_user = UserModel.objects.filter(email_address=user_email).first()
+
+        if existing_user:
+            raise Http404
+
+        else:
+            new_user = UserModel(name=user_name, email_address=user_email, age=user_age, password=user_password)
+            new_user.save()
+
 
 def signup_view(request):
     if request.method == "GET":
