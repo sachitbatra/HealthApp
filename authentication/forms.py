@@ -1,11 +1,17 @@
 from django import forms
-from .models import UserModel
+from .models import *
 
 
-class SignUpForm(forms.ModelForm):
+class UserSignUpForm(forms.ModelForm):
     class Meta:
         model = UserModel
-        fields = ['name', 'email_address', 'password', 'age']
+        fields = ['name', 'email_address', 'password', 'dateOfBirth']
+
+
+class DocSignUpForm(forms.ModelForm):
+    class Meta:
+        model = DoctorModel
+        fields = ['name', 'email_address', 'password', 'dateOfBirth', 'specialization', 'auth_document', 'degree', 'experience']
 
 
 class LogInForm(forms.Form):

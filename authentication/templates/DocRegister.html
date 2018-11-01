@@ -1,0 +1,67 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Assist</title>
+</head>
+
+<body>
+<div class="main">
+    <h1>Health Assist</h1>
+    <h3>Register as a Doctor with Health Assist</h3>
+</div>
+
+<div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <div>
+                <label for="name">Name: </label>
+                <input id="name" type="text" name="name" value="{{ signup_form.name }}">
+            </div>
+
+            <div>
+                <label for="email">Email: </label>
+                <input id="email" type="text" name="email_address" value="{{ signup_form.email_address }}">
+            </div>
+
+            <div>
+                <label for="password">Password: </label>
+                <input id="password" type="password" name="password" value="{{ signup_form.password }}">
+            </div>
+
+            <div>
+                <label for="dateOfBirth">Date of Birth: </label>
+                <input id="dateOfBirth" type="date" name="dateOfBirth" value="{{ signup_form.dateOfBirth|date:"Y-m-d"}}">
+            </div>
+
+            <div>
+                <label for="specialization">Specialization: </label>
+                <input id="specialization" type="text" name="specialization" value="{{ signup_form.specialization }}">
+            </div>
+
+            <div>
+                <label for="auth_document">Please Upload a Photo of your highest certification for verification: </label>
+                <input id="auth_document" type="file" name="auth_document" value="{{ signup_form.auth_document }}">
+            </div>
+
+            <div>
+                <label for="degree">Degree: </label>
+                <input id="degree" type="text" name="degree" value="{{ signup_form.degree }}">
+            </div>
+
+            <div>
+                <label for="experience">Years of Experience: </label>
+                <input id="experience" type="experience" name="experience" value="{{ signup_form.experience }}">
+            </div>
+
+            <input type="submit" value="Sign Up">
+        </div>
+    </form>
+</div>
+</body>
+
+</html>

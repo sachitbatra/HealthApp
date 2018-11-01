@@ -20,10 +20,13 @@ from authentication.views import *
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    url('login', login_view),
-    url('signup', signup_view),
+    url('^doc/signup', doc_signup_view),
+    url('^doc/login', doc_login_view),
+    url('doc', doc_signup_view),
+    url('^login', user_login_view),
+    url('^signup', user_signup_view),
     url(r'^api/user', UserOperations.as_view()),
-    url('', signup_view),  # Replace With HomePage
+    url('', user_signup_view),  # Replace With HomePage
     path('admin/', admin.site.urls),
 ]
 
