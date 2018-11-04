@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponseRedirect
 from .forms import *
@@ -16,6 +17,15 @@ from .serializers import UserModelSerializer
 from HealthApp.settings import BASE_DIR
 from imgurpython import ImgurClient
 from .api_keys import imgur_client_id, imgur_client_secret
+
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+
+
+def error_view(request):
+    return render(request, 'Error.html')
+
 
 class UserOperations(APIView):
     def get(self, request):
@@ -160,20 +170,62 @@ def doc_signup_view(request):
             new_doc.save()
 
             img_path = str(BASE_DIR + '\\' + new_doc.auth_document.url)
-            print (img_path)
             img_client = ImgurClient(imgur_client_id, imgur_client_secret)
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
+            print(new_doc.auth_document_url)
             new_doc.save()
+
+            send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
 
             response = redirect('/doc/login')
             response['Location'] += "?msg=0"
             return response
 
         else:
-            import pdb
-            pdb.set_trace()
             return redirect('/error', message="Invalid Data Submitted")  # TODO: Create Error HTML File
         # TODO: Create Error View
+
+
+def send_verification_mail(docName, docID, imageLink):
+    successLink = "http://127.0.0.1:8000/verification?id=%s&valid=y" %(docID)
+    failLink = "http://127.0.0.1:8000/verification?id=%s&valid=n" %(docID)
+    mail_content = "Greetings,\nValidate a new Doctor Registration to enable a better Healthcare!\nVerification Document: %s.\n To verify, please follow this link: %s.\nTo delete Doctor from System, please click here: %s." %(imageLink, successLink, failLink)
+
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+    from_email = Email("admin@healthapp.com")
+    to_email = Email("sachitbatra97@gmail.com")
+    subject = "Verify New Dcotor: " + docName
+    content = Content("text/plain", mail_content)
+    mail = Mail(from_email, subject, to_email, content)
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+
+
+def verify_doctor(request):
+    if request.method == "GET":
+        if request.GET.get("id") != None:
+            curDoctor = DoctorModel.objects.get(id=request.GET.get("id"))
+
+            if request.GET.get("valid") != None:
+                if request.GET.get("valid") == "y":
+                    curDoctor.verified = True
+                    curDoctor.save()
+                    messages.info(request, 'Validation Successful')
+                else:
+                    curDoctor.delete()
+                    messages.info(request, 'Deletion Successful')
+
+                return HttpResponseRedirect('/doc')  #TODO: Replace with HomePage
+
+
+            else:
+                messages.info(request, 'Invalid Validation URL, Please check again')
+                return HttpResponseRedirect('/error')
+        else:
+            messages.info(request, 'Invalid Validation URL, Please check again')
+            return HttpResponseRedirect('/error')
 
 
 def doc_login_view(request):
@@ -279,5 +331,5 @@ def get_user(request):
     return UserSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first().user
 
 
-def get_docotr(request):
+def get_doctor(request):
     return DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first().doctor

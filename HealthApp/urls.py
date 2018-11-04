@@ -25,6 +25,8 @@ urlpatterns = [
     url('doc', doc_signup_view),
     url('^login', user_login_view),
     url('^signup', user_signup_view),
+    url('^verification', verify_doctor),
+    url('^error', error_view),
     url(r'^api/user', UserOperations.as_view()),
     url('', user_signup_view),  # Replace With HomePage
     path('admin/', admin.site.urls),
