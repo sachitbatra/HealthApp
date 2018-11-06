@@ -169,10 +169,9 @@ def doc_signup_view(request):
             new_doc = DoctorModel(name=name, email_address=email_id, dateOfBirth=dateOfBirth, password=make_password(password), specialization=specialization, auth_document=auth_document, degree=degree, experience=experience)
             new_doc.save()
 
-            img_path = str(BASE_DIR + '\\' + new_doc.auth_document.url)
+            img_path = os.path.join(BASE_DIR, new_doc.auth_document.url)
             img_client = ImgurClient(imgur_client_id, imgur_client_secret)
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
-            print(new_doc.auth_document_url)
             new_doc.save()
 
             send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
