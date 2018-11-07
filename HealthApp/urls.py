@@ -22,7 +22,7 @@ from authentication.views import *
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    #url('doc/signup', doc_signup_view),
+    url('doc/signup', doc_signup_view),
     url('doc/login', doc_login_view),
     #url('doc', doc_signup_view),
     url('^login', user_login_view),
