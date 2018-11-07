@@ -14,22 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url,include
+from django.conf.urls.static import static
 from authentication.views import *
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    url('^doc/signup', doc_signup_view),
-    url('^doc/login', doc_login_view),
-    url('doc', doc_signup_view),
+    #url('doc/signup', doc_signup_view),
+    url('doc/login', doc_login_view),
+    #url('doc', doc_signup_view),
     url('^login', user_login_view),
     url('^signup', user_signup_view),
     url('^verification', verify_doctor),
-    url('^error', error_view),
+    url('^error/', error_view),
     url(r'^api/user', UserOperations.as_view()),
-    url('', user_signup_view),  # Replace With HomePage
+    #url('', user_signup_view),  # Replace With HomePage
+    url('doctor/',include("doctor_core.urls")),
     path('admin/', admin.site.urls),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
