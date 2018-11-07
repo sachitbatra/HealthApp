@@ -8,7 +8,10 @@ class UserModel(models.Model):
     password = models.CharField(max_length=4096)
     dateOfBirth = models.DateTimeField()
     created_on = models.DateTimeField(auto_now_add=True)
-
+    def __str__(self):
+        return self.name
+    def __unicode__(self):
+        return self.name
     @property
     def age(self):
         today = datetime.date.today()
@@ -26,6 +29,10 @@ class DoctorModel(models.Model):
     degree = models.CharField(max_length=255)
     experience = models.IntegerField()
     verified = models.BooleanField(default=False)
+    def __str__(self):
+        return self.name
+    def __unicode__(self):
+        return self.name
 
 class UserSessionToken(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)

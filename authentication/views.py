@@ -21,9 +21,11 @@ from .api_keys import imgur_client_id, imgur_client_secret
 import sendgrid
 import os
 from sendgrid.helpers.mail import *
+from django.urls import reverse
 
 
-def error_view(request):
+def error_view(request,message):
+    messages.error(request,message)
     return render(request, 'Error.html')
 
 
@@ -174,14 +176,17 @@ def doc_signup_view(request):
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
             new_doc.save()
 
-            send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
+            #send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
 
             response = redirect('/doc/login')
             response['Location'] += "?msg=0"
             return response
 
         else:
-            return redirect('/error', message="Invalid Data Submitted")  # TODO: Create Error HTML File
+            #return redirect(reverse('error_view',kwargs={'message':'Invalid user data'}))  # TODO: Create Error HTML File
+            #print(signup_form.errors)
+            messages.error(request,"Invalid data entered")
+            return render(request, "Error.html")
         # TODO: Create Error View
 
 
@@ -255,7 +260,7 @@ def doc_login_view(request):
                     session_token.create_token()
                     session_token.save()
 
-                    response = redirect('success.html')  # TODO: DashBoard
+                    response = redirect('/doctor/signed_in')  # TODO: DashBoard
                     response.set_cookie(key="doctor_session_token", value=session_token.session_token)
 
                     return response  # TODO: Redirect to User Dashboard
@@ -288,7 +293,7 @@ def check_user_token_validation(request):
 
 def check_doc_token_validation(request):
     if check_doc_session_cookie(request):
-        session = DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first()
+        session = DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('doctor_session_token')).first() # changed from user_session_token
 
         if check_token_ttl(session):
             return True
@@ -331,4 +336,4 @@ def get_user(request):
 
 
 def get_doctor(request):
-    return DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first().doctor
+    return DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('doctor_session_token')).first().doctor #changed from user_session_token
