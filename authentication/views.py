@@ -8,6 +8,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.http import Http404
 import json
+from django.conf import settings
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -21,17 +22,15 @@ from .api_keys import imgur_client_id, imgur_client_secret
 import sendgrid
 import os
 from sendgrid.helpers.mail import *
-from django.urls import reverse
 
 
-def error_view(request,message):
-    messages.error(request,message)
+def error_view(request):
     return render(request, 'Error.html')
 
 
 class UserOperations(APIView):
     def get(self, request):
-        if request.GET.get("email") != None:
+        if request.GET.get("email") is not None:
             email = request.GET.get("email")
             curUser = UserModel.objects.filter(email_address=email).first()
 
@@ -49,7 +48,7 @@ class UserOperations(APIView):
         input_json = json.loads(request.body)
 
         for curField in fields:
-            if input_json[curField] == None:
+            if input_json[curField] is None:
                 raise Http404
 
         user_name = input_json['name']
@@ -72,9 +71,8 @@ def user_signup_view(request):
         if check_user_session_cookie(request):
             session = UserSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first()
             if check_token_ttl(session):
-                response = redirect('success.html')
-                response['Location'] += "?msg='Your\'re already signed in!'"
-                return response
+                messages.info(request, 'Your\'re already signed in!')
+                return HttpResponseRedirect('/error')  # Replace with Homepage
 
         signup_form = UserSignUpForm()
         return render(request, 'UserRegister.html', {'form': signup_form})
@@ -91,13 +89,12 @@ def user_signup_view(request):
             new_user = UserModel(name=name, email_address=email_id, dateOfBirth=dateOfBirth, password=make_password(password))
             new_user.save()
 
-            response = redirect('/login')
-            response['Location'] += "?msg=0"
-            return response
+            messages.info(request, 'Successfully Signed Up, Please enter your details again to Log in')
+            return HttpResponseRedirect('/login')
 
         else:
-            return redirect('/error', message="Invalid Data Submitted")  # TODO: Create Error HTML File
-        # TODO: Create Error View
+            messages.error(request, 'Invalid Data Submitted')
+            return HttpResponseRedirect('/error')
 
 
 def user_login_view(request):
@@ -110,8 +107,7 @@ def user_login_view(request):
 
         login_form = LogInForm()
 
-        if request.GET.get("msg") != None:
-            from .message_codes import login_msg
+        if request.GET.get("msg") is not None:
             message_code = request.GET.get("msg")
 
             return render(request, 'UserLogin.html', {'form': login_form, 'message': login_msg[message_code]})
@@ -120,7 +116,6 @@ def user_login_view(request):
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)
-        response = redirect('/login')  # To be appended and returned in case of error conditions
 
         if login_form.is_valid():
             email = login_form.cleaned_data["email_address"]
@@ -128,7 +123,7 @@ def user_login_view(request):
 
             user_fromDB = UserModel.objects.filter(email_address=email).first()
 
-            if user_fromDB:  # Not Equal to None
+            if user_fromDB:
                 if check_password(password, user_fromDB.password):
                     session_token = UserSessionToken(user=user_fromDB)
                     session_token.create_token()
@@ -139,14 +134,14 @@ def user_login_view(request):
 
                     return response  # TODO: Redirect to User Dashboard
                 else:
-                    response['Location'] += "?msg=1"
-                    return response
+                    messages.error(request, 'Invalid Password, please try again')
+                    return HttpResponseRedirect('/login')
             else:
-                response['Location'] += "?msg=2"
-                return response
+                messages.error(request, 'No Registered User found with the given Email Address')
+                return HttpResponseRedirect('/login')
         else:
-            response['Location'] += "?msg=3"
-            return response
+            messages.error(request, 'Invalid Data Submitted in Log In Form')
+            return HttpResponseRedirect('/login')
 
 
 def doc_signup_view(request):
@@ -171,23 +166,20 @@ def doc_signup_view(request):
             new_doc = DoctorModel(name=name, email_address=email_id, dateOfBirth=dateOfBirth, password=make_password(password), specialization=specialization, auth_document=auth_document, degree=degree, experience=experience)
             new_doc.save()
 
-            img_path = os.path.join(BASE_DIR, new_doc.auth_document.url)
+            img_path = new_doc.auth_document.path
             img_client = ImgurClient(imgur_client_id, imgur_client_secret)
+            print(img_path)
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
             new_doc.save()
 
-            #send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
+            send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
 
-            response = redirect('/doc/login')
-            response['Location'] += "?msg=0"
-            return response
-
+            messages.info(request, 'Successfully Signed Up, Please enter your details again to Log in')
+            return HttpResponseRedirect('/doc/login')
         else:
-            #return redirect(reverse('error_view',kwargs={'message':'Invalid user data'}))  # TODO: Create Error HTML File
-            #print(signup_form.errors)
-            messages.error(request,"Invalid data entered")
-            return render(request, "Error.html")
-        # TODO: Create Error View
+            print (signup_form.errors)
+            messages.error(request, 'Invalid data entered')
+            return HttpResponseRedirect('/error')
 
 
 def send_verification_mail(docName, docID, imageLink):
@@ -220,15 +212,12 @@ def verify_doctor(request):
                 else:
                     curDoctor.delete()
                     messages.info(request, 'Deletion Successful')
-
                 return HttpResponseRedirect('/doc')  #TODO: Replace with HomePage
-
-
             else:
-                messages.info(request, 'Invalid Validation URL, Please check again')
+                messages.error(request, 'Invalid Validation URL, Please check again')
                 return HttpResponseRedirect('/error')
         else:
-            messages.info(request, 'Invalid Validation URL, Please check again')
+            messages.error(request, 'Invalid Validation URL, Please check again')
             return HttpResponseRedirect('/error')
 
 
@@ -237,7 +226,6 @@ def doc_login_view(request):
         login_form = LogInForm()
 
         if request.GET.get("msg") != None:
-            from .message_codes import login_msg
             message_code = request.GET.get("msg")
 
             return render(request, 'DocLogin.html', {'form': login_form, 'message': login_msg[message_code]})
@@ -246,7 +234,6 @@ def doc_login_view(request):
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)
-        response = redirect('/doc/login')  # To be appended and returned in case of error conditions
 
         if login_form.is_valid():
             email = login_form.cleaned_data["email_address"]
@@ -254,7 +241,7 @@ def doc_login_view(request):
 
             doc_fromDB = DoctorModel.objects.filter(email_address=email).first()
 
-            if doc_fromDB:  # Not Equal to None
+            if doc_fromDB:
                 if check_password(password, doc_fromDB.password):
                     session_token = DoctorSessionToken(doctor=doc_fromDB)
                     session_token.create_token()
@@ -265,14 +252,14 @@ def doc_login_view(request):
 
                     return response  # TODO: Redirect to User Dashboard
                 else:
-                    response['Location'] += "?msg=1"
-                    return response
+                    messages.error(request, 'Invalid Password, please try again')
+                    return HttpResponseRedirect('/doc/login')
             else:
-                response['Location'] += "?msg=2"
-                return response
+                messages.error(request, 'No Registered User found with the given Email Address')
+                return HttpResponseRedirect('/doc/login')
         else:
-            response['Location'] += "?msg=3"
-            return response
+            messages.error(request, 'Invalid Data Submitted in Log In Form')
+            return HttpResponseRedirect('/doc/login')
 
 
 def check_user_token_validation(request):
@@ -282,13 +269,11 @@ def check_user_token_validation(request):
         if check_token_ttl(session):
             return True
         else:
-            response = redirect('/login')
-            response['Location'] += "?msg=4"
-            return response
+            messages.error(request, 'Your Session has expired, please log in again to continue')
+            return HttpResponseRedirect('/login')
     else:
-        response = redirect('/login')
-        response['Location'] += "?msg=5"
-        return response
+        messages.info(request, 'Please Log in first to access the page')
+        return HttpResponseRedirect('/login')
 
 
 def check_doc_token_validation(request):
@@ -298,13 +283,11 @@ def check_doc_token_validation(request):
         if check_token_ttl(session):
             return True
         else:
-            response = redirect('/doc/login')
-            response['Location'] += "?msg=4"
-            return response
+            messages.error(request, 'Your Session has expired, please log in again to continue')
+            return HttpResponseRedirect('/doc/login')
     else:
-        response = redirect('/doc/login')
-        response['Location'] += "?msg=5"
-        return response
+        messages.info(request, 'Please Log in first to access the page')
+        return HttpResponseRedirect('/doc/login')
 
 
 def check_user_session_cookie(request):
@@ -336,4 +319,4 @@ def get_user(request):
 
 
 def get_doctor(request):
-    return DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('doctor_session_token')).first().doctor #changed from user_session_token
+    return DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('doctor_session_token')).first().doctor
