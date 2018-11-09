@@ -3,7 +3,7 @@ import uuid
 import datetime
 
 
-class UserModel(models.Model):
+class AppUser(models.Model):
     name = models.CharField(max_length=255)
     email_address = models.EmailField(unique=True)
     password = models.CharField(max_length=4096)
@@ -19,33 +19,21 @@ class UserModel(models.Model):
     @property
     def age(self):
         today = datetime.date.today()
-        return today.year - self.dateOfBirth.year - ((today.month, today.day) < (self.dateOfBirth.month, self.dateOfBirth.day))
+        return today.year - self.dateOfBirth.year - (
+                    (today.month, today.day) < (self.dateOfBirth.month, self.dateOfBirth.day))
 
 
-class DoctorModel(models.Model):
-    name = models.CharField(max_length=255)
-    email_address = models.EmailField(unique=True)
-    password = models.CharField(max_length=4096)
-    dateOfBirth = models.DateTimeField(default=datetime.datetime.now)
-    created_on = models.DateTimeField(auto_now_add=True)
+class UserModel(AppUser):
+    pass
+
+
+class DoctorModel(AppUser):
     specialization = models.CharField(max_length=255)
     auth_document = models.FileField(upload_to='authenticationDocs')
     auth_document_url = models.CharField(max_length=255)
     degree = models.CharField(max_length=255)
     experience = models.IntegerField()
     verified = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-    def __unicode__(self):
-        return self.name
-
-    @property
-    def age(self):
-        today = datetime.date.today()
-        return today.year - self.dateOfBirth.year - (
-                    (today.month, today.day) < (self.dateOfBirth.month, self.dateOfBirth.day))
 
 
 class UserSessionToken(models.Model):

@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Avg,Count
+from django.db.models import Avg, Count
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 from authentication.models import UserModel,DoctorModel
@@ -27,8 +27,8 @@ class DoctorProfile(models.Model):
 
 
 class Consultation(models.Model):
-    doctor = models.ForeignKey(DoctorModel, on_delete=models.CASCADE)
-    user = models.ForeignKey(UserModel,on_delete=models.CASCADE)
+    doctor = models.ForeignKey(DoctorModel, on_delete=models.CASCADE, related_name='doctor')
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='patient')
     no_days = models.IntegerField(default=3,validators=[MaxValueValidator(5), MinValueValidator(3)])
     created_on = models.DateTimeField(auto_now_add=True)
     diagnosis = models.TextField(blank=True)

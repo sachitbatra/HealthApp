@@ -22,7 +22,7 @@ def signed_in(request):
 
 def view_profile(request):
     logged_in = check_doc_token_validation(request)
-    doctor = None    
+    doctor = None
     if logged_in:
         try:
             doctor = get_doctor(request)

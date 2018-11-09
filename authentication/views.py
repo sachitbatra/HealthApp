@@ -69,10 +69,10 @@ class UserOperations(APIView):
 def user_signup_view(request):
     if request.method == "GET":
         if check_user_session_cookie(request):
-            session = UserSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first()
+            session = UserSessionToken.objects.filter(session_token=request.session.get('user_session_token', None)).first()
             if check_token_ttl(session):
-                messages.info(request, 'Your\'re already signed in!')
-                return HttpResponseRedirect('/error')  # Replace with Homepage
+                messages.info(request, 'Your\'re already signed in as a User!')
+                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         signup_form = UserSignUpForm()
         return render(request, 'UserRegister.html', {'form': signup_form})
@@ -100,19 +100,19 @@ def user_signup_view(request):
 def user_login_view(request):
     if request.method == "GET":
         if check_user_session_cookie(request):
-            if check_token_ttl(request):
-                response = redirect('success.html')
-                response['Location'] += "?msg='Your\'re already signed in!'"
-                return response
+            session = UserSessionToken.objects.filter(session_token=request.session.get('user_session_token', None)).first()
+            if check_token_ttl(session):
+                messages.info(request, 'Your\'re already signed in as a User!')
+                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
+
+        if check_doc_session_cookie(request):
+            session = UserSessionToken.objects.filter(session_token=request.session.get('doctor_session_token', None)).first()
+            if check_token_ttl(session):
+                messages.info(request, 'Your\'re already signed in as a Doctor!')
+                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         login_form = LogInForm()
-
-        if request.GET.get("msg") is not None:
-            message_code = request.GET.get("msg")
-
-            return render(request, 'UserLogin.html', {'form': login_form, 'message': login_msg[message_code]})
-        else:
-            return render(request, 'UserLogin.html', {'form': login_form})
+        return render(request, 'UserLogin.html', {'form': login_form})
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)
@@ -129,9 +129,9 @@ def user_login_view(request):
                     session_token.create_token()
                     session_token.save()
 
+                    request.session['user_session_token'] = session_token.session_token  # Using Session Middleware
                     response = redirect('success.html')  # TODO: DashBoard
-                    response.set_cookie(key="user_session_token", value=session_token.session_token)
-
+                    # response.set_cookie(key="user_session_token", value=session_token.session_token)
                     return response  # TODO: Redirect to User Dashboard
                 else:
                     messages.error(request, 'Invalid Password, please try again')
@@ -146,8 +146,13 @@ def user_login_view(request):
 
 def doc_signup_view(request):
     if request.method == "GET":
-        signup_form = DocSignUpForm()
+        if check_doc_session_cookie(request):
+            session = UserSessionToken.objects.filter(session_token=request.session.get('doctor_session_token', None)).first()
+            if check_token_ttl(session):
+                messages.info(request, 'Your\'re already signed in as a Doctor!')
+                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
+        signup_form = DocSignUpForm()
         return render(request, 'DocRegister.html', {'form': signup_form})
 
     elif request.method == "POST":
@@ -168,7 +173,6 @@ def doc_signup_view(request):
 
             img_path = new_doc.auth_document.path
             img_client = ImgurClient(imgur_client_id, imgur_client_secret)
-            print(img_path)
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
             new_doc.save()
 
@@ -177,7 +181,6 @@ def doc_signup_view(request):
             messages.info(request, 'Successfully Signed Up, Please enter your details again to Log in')
             return HttpResponseRedirect('/doc/login')
         else:
-            print (signup_form.errors)
             messages.error(request, 'Invalid data entered')
             return HttpResponseRedirect('/error')
 
@@ -223,14 +226,20 @@ def verify_doctor(request):
 
 def doc_login_view(request):
     if request.method == "GET":
+        if check_doc_session_cookie(request):
+            session = UserSessionToken.objects.filter(session_token=request.session.get('doctor_session_token', None)).first()
+            if check_token_ttl(session):
+                messages.info(request, 'Your\'re already signed in as a Doctor!')
+                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
+
+        if check_user_session_cookie(request):
+            session = UserSessionToken.objects.filter(session_token=request.session.get('user_session_token', None)).first()
+            if check_token_ttl(session):
+                messages.info(request, 'Your\'re already signed in as a User!')
+                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
+
         login_form = LogInForm()
-
-        if request.GET.get("msg") != None:
-            message_code = request.GET.get("msg")
-
-            return render(request, 'DocLogin.html', {'form': login_form, 'message': login_msg[message_code]})
-        else:
-            return render(request, 'DocLogin.html', {'form': login_form})
+        return render(request, 'DocLogin.html', {'form': login_form})
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)
@@ -247,8 +256,9 @@ def doc_login_view(request):
                     session_token.create_token()
                     session_token.save()
 
+                    request.session['doctor_session_token'] = session_token.session_token
                     response = redirect('/doctor/signed_in')  # TODO: DashBoard
-                    response.set_cookie(key="doctor_session_token", value=session_token.session_token)
+                    # response.set_cookie(key="doctor_session_token", value=session_token.session_token)
 
                     return response  # TODO: Redirect to User Dashboard
                 else:
@@ -264,7 +274,7 @@ def doc_login_view(request):
 
 def check_user_token_validation(request):
     if check_user_session_cookie(request):
-        session = UserSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first()
+        session = UserSessionToken.objects.filter(session_token=request.session.get('user_session_token', None)).first()
 
         if check_token_ttl(session):
             return True
@@ -278,7 +288,7 @@ def check_user_token_validation(request):
 
 def check_doc_token_validation(request):
     if check_doc_session_cookie(request):
-        session = DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('doctor_session_token')).first() # changed from user_session_token
+        session = DoctorSessionToken.objects.filter(session_token=request.session.get('doctor_session_token', None)).first()
 
         if check_token_ttl(session):
             return True
@@ -291,14 +301,14 @@ def check_doc_token_validation(request):
 
 
 def check_user_session_cookie(request):
-    if request.COOKIES.get('user_session_token') is not None:
+    if request.session.get('user_session_token') is not None:
         return True
     else:
         return False
 
 
 def check_doc_session_cookie(request):
-    if request.COOKIES.get('doctor_session_token') is not None:
+    if request.session.get('doctor_session_token') is not None:
         return True
     else:
         return False
@@ -315,8 +325,8 @@ def check_token_ttl(token):
 
 
 def get_user(request):
-    return UserSessionToken.objects.filter(session_token=request.COOKIES.get('user_session_token')).first().user
+    return UserSessionToken.objects.filter(session_token=request.session.get('user_session_token', None)).first().user
 
 
 def get_doctor(request):
-    return DoctorSessionToken.objects.filter(session_token=request.COOKIES.get('doctor_session_token')).first().doctor
+    return DoctorSessionToken.objects.filter(session_token=request.session.get('doctor_session_token', None)).first().doctor
