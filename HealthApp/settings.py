@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'doctor_core',
     'authentication',
+    'consultation',
+    'channels',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -71,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'HealthApp.wsgi.application'
+ASGI_APPLICATION = "HealthApp.routing.application"
 
 
 # Database
@@ -87,6 +90,7 @@ DATABASES = {
     }
 }
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -128,3 +132,12 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
