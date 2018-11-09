@@ -46,7 +46,7 @@ class UserSessionToken(models.Model):
 
 
 class DoctorSessionToken(models.Model):
-    doctor = models.ForeignKey(DoctorModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(DoctorModel, on_delete=models.CASCADE)
     session_token = models.CharField(max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
 

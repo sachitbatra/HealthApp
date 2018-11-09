@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^api/user', UserOperations.as_view()),
     #url('', user_signup_view),  # Replace With HomePage
     url('doctor/',include("doctor_core.urls")),
+    url('consultation/', include('consultation.urls')),
     path('admin/', admin.site.urls),
 ]
 
