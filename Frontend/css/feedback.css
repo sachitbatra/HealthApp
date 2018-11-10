@@ -1,0 +1,18 @@
+h3 {
+  color: black;
+}
+.container {
+  position: relative;
+  top : 50px;
+  width: 1000px;
+  right :160px;
+}
+
+.panel-body {
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
