@@ -15,7 +15,7 @@ class ThreadManager(models.Manager):
     def get_or_new(self, user, other_user):  # get_or_create
         username = user.email_address
         if username == other_user:
-            return None, False
+            return None
         qlookup1 = Q(first__email_address=username) & Q(second__email_address=other_user)
         qlookup2 = Q(first__email_address=other_user) & Q(second__email_address=username)
         qs = self.get_queryset().filter(qlookup1 | qlookup2).distinct()
