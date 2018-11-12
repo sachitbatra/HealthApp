@@ -152,7 +152,7 @@ def doc_signup_view(request):
                 userType = "Doctor"
             if check_token_ttl(sessionVar):
                 messages.info(request, f"You\'re already signed in as a {userType}!")
-                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
+                #return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         signup_form = DocSignUpForm()
         return render(request, 'DocRegister.html', {'form': signup_form})
@@ -178,7 +178,8 @@ def doc_signup_view(request):
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
             new_doc.save()
 
-            #send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
+            # commented for testing with dummy data
+            # send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
 
             messages.info(request, 'Successfully Signed Up, Please enter your details again to Log in')
             return HttpResponseRedirect('/doc/login')
@@ -194,7 +195,7 @@ def send_verification_mail(docName, docID, imageLink):
 
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email("admin@healthapp.com")
-    to_email = Email("sidd.suresh97@gmail.com")
+    to_email = Email("sachitbatra97@gmail.com")
     subject = "Verify New Dcotor: " + docName
     content = Content("text/plain", mail_content)
     mail = Mail(from_email, subject, to_email, content)
@@ -236,7 +237,7 @@ def doc_login_view(request):
                 userType = "Doctor"
             if check_token_ttl(sessionVar):
                 messages.info(request, f"You\'re already signed in as a {userType}!")
-                return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
+                #return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         login_form = LogInForm()
         return render(request, 'DocLogin.html', {'form': login_form})
@@ -270,15 +271,6 @@ def doc_login_view(request):
         else:
             messages.error(request, 'Invalid Data Submitted in Log In Form')
             return HttpResponseRedirect('/doc/login')
-
-
-def logout_view(request):
-    if request.method == "GET":
-        del request.session['session_token']
-        request.session.modified = True
-        return HttpResponseRedirect('/login')
-    else:
-        raise Http404
 
 
 def check_user_token_validation(request):
@@ -316,7 +308,6 @@ def check_session_cookie(request):
         return False
 
 
-# Backward compatibility: use check_session_cookie function instead
 def check_user_session_cookie(request):
     if request.session.get('session_token') is not None:
         return True
@@ -324,7 +315,6 @@ def check_user_session_cookie(request):
         return False
 
 
-# Backward compatibility: use check_session_cookie function instead
 def check_doc_session_cookie(request):
     if request.session.get('session_token') is not None:
         return True
@@ -342,22 +332,10 @@ def check_token_ttl(token):
         return False
 
 
-# Backward compatibility: use get_abstract_user function instead
 def get_user(request):
     return UserSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first().user
 
 
-# Backward compatibility: use get_abstract_user function instead
 def get_doctor(request):
     return DoctorSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first().user
 
-
-# Returns the User (Doctor or User) if logged in, None otherwise
-def get_abstract_user(request):
-    if check_session_cookie(request):
-        sessionVar = UserSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
-        if sessionVar is None:
-            sessionVar = DoctorSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
-        if check_token_ttl(sessionVar):
-            return sessionVar.user
-        return None
