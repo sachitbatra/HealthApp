@@ -27,6 +27,7 @@ urlpatterns = [
     #url('doc', doc_signup_view),
     url('^login', user_login_view),
     url('^signup', user_signup_view),
+    url('^logout', logout_view),
     url('^verification', verify_doctor),
     url('^error/', error_view),
     url(r'^api/user', UserOperations.as_view()),

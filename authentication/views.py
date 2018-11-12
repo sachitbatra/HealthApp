@@ -272,6 +272,15 @@ def doc_login_view(request):
             return HttpResponseRedirect('/doc/login')
 
 
+def logout_view(request):
+    if request.method == "GET":
+        del request.session['session_token']
+        request.session.modified = True
+        return HttpResponseRedirect('/login')
+    else:
+        raise Http404
+
+
 def check_user_token_validation(request):
     if check_session_cookie(request):
         session = UserSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
@@ -341,8 +350,6 @@ def get_user(request):
 # Backward compatibility: use get_abstract_user function instead
 def get_doctor(request):
     return DoctorSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first().user
-<<<<<<< HEAD
-=======
 
 
 # Returns the User (Doctor or User) if logged in, None otherwise
@@ -354,6 +361,3 @@ def get_abstract_user(request):
         if check_token_ttl(sessionVar):
             return sessionVar.user
         return None
-
-
->>>>>>> fae4742a014b29353db7dfe7082af30a18a5970a
