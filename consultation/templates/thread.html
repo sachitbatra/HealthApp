@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Thread for {% if curUser != object.first.email_address %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
+<h3>Talking to {% if curUser != object.first.email_address %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
 <ul id='chat-items'>
 {% for chat in object.chatmessage_set.all %}
 
