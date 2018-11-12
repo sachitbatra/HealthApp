@@ -178,7 +178,7 @@ def doc_signup_view(request):
             new_doc.auth_document_url = img_client.upload_from_path(img_path, anon=True)['link']
             new_doc.save()
 
-            send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
+            #send_verification_mail(name, new_doc.id, new_doc.auth_document_url)
 
             messages.info(request, 'Successfully Signed Up, Please enter your details again to Log in')
             return HttpResponseRedirect('/doc/login')
@@ -194,7 +194,7 @@ def send_verification_mail(docName, docID, imageLink):
 
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email("admin@healthapp.com")
-    to_email = Email("sachitbatra97@gmail.com")
+    to_email = Email("sidd.suresh97@gmail.com")
     subject = "Verify New Dcotor: " + docName
     content = Content("text/plain", mail_content)
     mail = Mail(from_email, subject, to_email, content)
@@ -337,4 +337,3 @@ def get_user(request):
 
 def get_doctor(request):
     return DoctorSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first().user
-

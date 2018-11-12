@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <title>Select your doctor</title>
+</head>
+
+<body>
+    <p>Here is the list of doctors
+    <ul>
+    {% for i in query %}
+        <li>{{i}}</li>
+    {% endfor %}
+    </ul>
+    <p> Click here to chat with them
+    <ul>
+    {% for j in ids %}
+        <li><a href="http://127.0.0.1:8000/consultation/{{j}}">{{forloop.counter}}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

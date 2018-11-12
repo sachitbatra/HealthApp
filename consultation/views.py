@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -12,6 +13,8 @@ from authentication.views import check_session_cookie, check_token_ttl
 
 from .forms import ComposeForm
 from .models import Thread, ChatMessage
+
+from authentication.models import *
 
 
 def get_abstract_user(request):
@@ -102,3 +105,10 @@ class ThreadView(FormMixin, DetailView):
         message = form.cleaned_data.get("message")
         ChatMessage.objects.create(user=user, thread=thread, message=message)
         return super().form_valid(form)
+
+def select_doctor(request):
+    query = DoctorModel.objects.all()
+    ids = DoctorModel.objects.values_list('email_address', flat=True)
+    print("IDS ARE",[i for i in ids])
+    args = {'query' :query, 'ids':ids}
+    return render(request, 'select_doctor.html' ,args)
