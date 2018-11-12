@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Health And Fitness Management</title>
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+
+  <!-- Favicons -->
+  <link href="/static/img/favicon.png" rel="icon">
+  <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <!-- Libraries CSS Files -->
+  <link href="/static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/lib/animate/animate.min.css" rel="stylesheet">
+  <link href="/static/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="/static/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/dashboard.css" rel="stylesheet">
+  <link href="/static/css/current_consultations.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+  <script type="text/javascript" src="js/dashboard.js"></script>
+</head>
+<body>
+  <div class = "header_content">
+    <header id="header">
+      <div class="container-fluid">
+        <div id="logo" class="pull-left">
+          <h1><a href="#intro" class="scrollto">AppName</a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+        </div>
+        <nav id="nav-menu-container" >
+          <ul class="nav-menu">
+            <li>Welcome Jim!</li>
+            <li id="profile"><img src="img/dashboard_profile.jpg"  alt="" title="" /></li>
+          </ul>
+        </nav><!-- #nav-menu-container -->
+      </div>
+    </header><!-- #header -->
+  </div>
+    <div class = "sidenav">
+      <a href="dashboard.html">Statistics</a>
+      <a class = "active">Current Consulations</a>
+      <a href="previous_consultations.html">Previous Consulations</a>
+      <a href="update_schedule.html">Update Schedule</a>
+      <a href="feedback.html">View Feedback</a>
+      <a href="#contact">Update Profile</a>
+      <a href="index.html">SignOut</a>
+    </div>
+    <div class = "main">
+      <div class="container">
+		     <div class="row text-center">
+            {% if consultations.0 %}
+             <div class="col">
+               <div class="patient1">
+                   <p id ="Patient1_Name"> Name : {{consultations.0}} </p>
+                   <p id ="Patient1_Info"> Info : </p>
+                   <p id ="ChatNowButton1"> <button type="button" class="btn btn-info">Chat Now</button></p>
+              </div>
+            </div>
+            {% endif %}
+            {% if consultations.1 %}
+            <div class="col">
+              <div class="patient2">
+                <p id ="Patient2_Name"> Name : {{consultations.1}} </p>
+                <p id ="Patient2_Info"> Info : </p>
+                <p id ="ChatNowButton2"> <button type="button" class="btn btn-info">Chat Now</button></p>
+             </div>
+           </div>
+           {% endif %}
+           {% if consultations.2 %}
+           <div class="col">
+             <div class="patient3">
+               <p id ="Patient3_Name"> Name : {{consultations.2}} </p>
+               <p id ="Patient3_Info"> Info : </p>
+               <p id ="ChatNowButton3"> <button type="button" class="btn btn-info">Chat Now</button></p>
+            </div>
+          </div>
+          {% endif %}
+          {% if consultations.3 %}
+          <div class="col">
+            <div class="patient4">
+              <p id ="Patient4_Name"> Name : {{consultations.3}} </p>
+              <p id ="Patient4_Info"> Info : </p>
+              <p id ="ChatNowButton4"> <button type="button" class="btn btn-info">Chat Now</button></p>
+           </div>
+         </div>
+         {% endif %}
+         {% if consultations.4 %}
+         <div class="col">
+           <div class="patient5">
+             <p id ="Patient5_Name"> Name : {{consultations.4}} </p>
+             <p id ="Patient5_Info"> Info : </p>
+             <p id ="ChatNowButton5"> <button type="button" class="btn btn-info">Chat Now</button></p>
+          </div>
+        </div>
+          {%endif%}
+          
+
+    </div>
+</div>
+</div>
+    </body>
+    </html>
