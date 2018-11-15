@@ -23,6 +23,15 @@ class AppUser(models.Model):
                     (today.month, today.day) < (self.dateOfBirth.month, self.dateOfBirth.day))
 
 
+class GoogleCredentials(models.Model):
+    user = models.ForeignKey(AppUser, primary_key=True, on_delete=models.CASCADE)
+    token = models.CharField(max_length=255)
+    token_uri = models.CharField(max_length=255)
+    client_id = models.CharField(max_length=255)
+    client_secret = models.CharField(max_length=255)
+    scopes = models.CharField(max_length=1000)
+
+
 class UserModel(AppUser):
     pass
 

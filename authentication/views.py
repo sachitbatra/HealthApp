@@ -23,6 +23,8 @@ import sendgrid
 import os
 from sendgrid.helpers.mail import *
 
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
 
 def error_view(request):
     return render(request, 'Error.html')
@@ -66,12 +68,62 @@ class UserOperations(APIView):
             new_user.save()
 
 
+def google_authenticate(request):
+    if request.method == "GET":
+        if get_abstract_user(request) is None:
+            messages.error(request, 'Please log in first to link your Google Account.')
+            return HttpResponseRedirect('/login')
+
+        credentials_fromDB = GoogleCredentials.objects.filter(user=get_abstract_user(request))
+        if credentials_fromDB:
+            messages.error(request, 'You have already linked your account with Google sign in.')
+            return HttpResponseRedirect('/error')
+
+        flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(os.path.join(BASE_DIR, 'client_secret.json'), scopes=['https://www.googleapis.com/auth/fitness.activity.read', 'https://www.googleapis.com/auth/fitness.body.read'])
+        flow.redirect_uri = 'http://127.0.0.1:8000/google_sign_in'
+        authorization_url, state = flow.authorization_url(
+            access_type='offline',
+            include_granted_scopes='true')
+        return HttpResponseRedirect(authorization_url)
+    else:
+        raise Http404
+
+
+def google_sign_in(request, *args, **kwargs):
+    if request.method == "GET":
+        if get_abstract_user(request) is None:
+            messages.error(request, 'Please log in first to link your Google Account.')
+            return HttpResponseRedirect('/login')
+
+        state = request.GET.get('state', False)
+        flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(os.path.join(BASE_DIR, 'client_secret.json'),
+                                                                       scopes=[
+                                                                           'https://www.googleapis.com/auth/fitness.activity.read',
+                                                                           'https://www.googleapis.com/auth/fitness.body.read'],
+                                                                       state=state)
+        flow.redirect_uri = 'http://127.0.0.1:8000/google_sign_in'
+        authorization_response = request.get_full_path()
+        os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+        flow.fetch_token(authorization_response=authorization_response)
+        credentials = flow.credentials
+        credentials_db = GoogleCredentials(user=get_abstract_user(request), token=credentials.token,
+                                           token_uri=credentials.token_uri, client_id=credentials.client_id,
+                                           client_secret=credentials.client_secret,
+                                           scopes=json.dumps(credentials.scopes))
+        credentials_db.save()
+        return HttpResponseRedirect('/success')
+    else:
+        raise Http404
+
+
 def user_signup_view(request):
     if request.method == "GET":
         if check_session_cookie(request):
-            session = UserSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
-            if check_token_ttl(session):
-                messages.info(request, 'Your\'re already signed in as a User!')
+            sessionVar = UserSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
+            if sessionVar is None:
+                sessionVar = DoctorSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
+            if check_token_ttl(sessionVar):
+                messages.info(request, f"You\'re already signed in as a {userType}!")
                 return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         signup_form = UserSignUpForm()
@@ -360,4 +412,6 @@ def get_abstract_user(request):
             sessionVar = DoctorSessionToken.objects.filter(session_token=request.session.get('session_token', None)).first()
         if check_token_ttl(sessionVar):
             return sessionVar.user
+        return None
+    else:
         return None

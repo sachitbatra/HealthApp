@@ -95,7 +95,7 @@ class ThreadView(FormMixin, DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         if get_abstract_user(request) is None:
-            messages.error(request, 'Please log in first to access Inbox.')
+            messages.error(request, 'Please log in first to Chat with other Users.')
             return HttpResponseRedirect('/login')
         else:
             return super(ThreadView, self).dispatch(request, *args, **kwargs)

@@ -29,6 +29,8 @@ urlpatterns = [
     url('^signup', user_signup_view),
     url('^logout', logout_view),
     url('^verification', verify_doctor),
+    url('^google_sign_in', google_sign_in),
+    url('^google', google_authenticate),
     url('^error/', error_view),
     url(r'^api/user', UserOperations.as_view()),
     #url('', user_signup_view),  # Replace With HomePage
