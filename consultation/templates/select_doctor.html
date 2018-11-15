@@ -7,15 +7,23 @@
 <body>
     <p>Here is the list of doctors
     <ul>
-    {% for i in query %}
-        <li>{{i}}</li>
+    {% for doctor in doctors_in_db  %}
+        <li><b>Name</b>: {{doctor.0}} &nbsp;&nbsp;&nbsp;&nbsp; <b>Specialization</b>: {{doctor.1}}</li>
     {% endfor %}
     </ul>
+    <p> Chose your doctor's specialisation
+    <form method ='GET' action = '/consultation/select_doctor'>
+        <input type ='text' name ='req_specialization_by_user' placeholder='Search'>
+    </form>
     <p> Click here to chat with them
     <ul>
-    {% for j in ids %}
-        <li><a href="http://127.0.0.1:8000/consultation/{{j}}">{{forloop.counter}}</a></li>
+    {% for item in ids %}
+
+        <li><a href="http://127.0.0.1:8000/consultation/{{item.0}}">{{item.1}}</a></li>
+
     {% endfor %}
     </ul>
+
+
 </body>
 </html>

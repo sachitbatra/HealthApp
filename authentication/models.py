@@ -1,6 +1,13 @@
 from django.db import models
 import uuid
 import datetime
+from django.db.models import Q
+
+class GetValidDoctorsManager(models.Manager):
+    def valid_doctors(self,req_specialization):
+        qlookup1 = Q(specialization=req_specialization)
+        qs = self.get_queryset().filter(qlookup1)
+        return qs
 
 
 class AppUser(models.Model):
@@ -34,7 +41,7 @@ class DoctorModel(AppUser):
     degree = models.CharField(max_length=255)
     experience = models.IntegerField()
     verified = models.BooleanField(default=False)
-
+    valid_doctors_objects = GetValidDoctorsManager()
 
 class UserSessionToken(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)

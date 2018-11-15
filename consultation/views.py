@@ -15,7 +15,7 @@ from .forms import ComposeForm
 from .models import Thread, ChatMessage
 
 from authentication.models import *
-
+from consultation.models import *
 
 class InboxView(ListView):
     template_name = 'inbox.html'
@@ -101,9 +101,21 @@ class ThreadView(FormMixin, DetailView):
             return super(ThreadView, self).dispatch(request, *args, **kwargs)
 
 
+
 def select_doctor(request):
+    active_consultations_allowed = 1
+    doctor_specialization = request.GET.get('req_specialization_by_user')
     query = DoctorModel.objects.all()
-    ids = DoctorModel.objects.values_list('email_address', flat=True)
-    print("IDS ARE",[i for i in ids])
-    args = {'query' :query, 'ids':ids}
+    print(query)
+    doctor_info = []
+    for doctor in query:
+        doctor_info += [(doctor.name,doctor.specialization)]
+    doctors_with_specialization = DoctorModel.valid_doctors_objects.valid_doctors(doctor_specialization)
+    valid_doctor_emails = []
+    for doctor in doctors_with_specialization:
+        active_doctor_consultations = Thread.objects.num_doctor_consultations(doctor.email_address)
+        if(active_doctor_consultations<= active_consultations_allowed):
+            valid_doctor_emails+=[(doctor.email_address,doctor.name)]
+    print("emails are:",valid_doctor_emails)
+    args = {'doctors_in_db' :doctor_info, 'ids':valid_doctor_emails}
     return render(request, 'select_doctor.html' ,args)

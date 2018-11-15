@@ -37,6 +37,11 @@ class ThreadManager(models.Manager):
                 return obj, True
             return None, False
 
+    def num_doctor_consultations(self, user):
+        qlookup = Q(first__email_address=user) | Q(second__email_address=user)
+        qs = self.get_queryset().filter(qlookup).distinct().count()
+        return qs
+
 
 class Thread(models.Model):
     first = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_thread_first')
