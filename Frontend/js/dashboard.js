@@ -1,3 +1,9 @@
+$(function() {
+   $('a.link').click(function() {
+       $('a.link').removeClass('active');
+       $(this).addClass('active');
+   });
+});
 (function ($) {
 	$.fn.countTo = function (options) {
 		options = options || {};

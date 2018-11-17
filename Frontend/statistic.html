@@ -29,7 +29,7 @@
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/dashboard.css" rel="stylesheet">
-  <link href="css/current_consultations.css" rel="stylesheet">
+  <link href="css/statistics.css" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -38,56 +38,42 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
   <script type="text/javascript" src="js/dashboard.js"></script>
+  <script type="text/javascript" src="js/linearchart.js"></script>
 </head>
 <body>
-    <div class = "main">
-      <div class="container">
-		     <div class="row text-center">
-             <div class="col">
-               <div class="patient1">
-                   <p id ="Patient1_Name"> Name :  </p>
-                   <p id ="Patient1_Info"> Info : </p>
-                   <p id ="ChatNowButton1"> <button type="button" class="btn btn-info">Chat Now</button></p>
-              </div>
-            </div>
-            <div class="col">
-              <div class="patient2">
-                <p id ="Patient2_Name"> Name :  </p>
-                <p id ="Patient2_Info"> Info : </p>
-                <p id ="ChatNowButton2"> <button type="button" class="btn btn-info">Chat Now</button></p>
-             </div>
-           </div>
-           <div class="col">
-             <div class="patient3">
-               <p id ="Patient3_Name"> Name :  </p>
-               <p id ="Patient3_Info"> Info : </p>
-               <p id ="ChatNowButton3"> <button type="button" class="btn btn-info">Chat Now</button></p>
-            </div>
+  <div class="container">
+     <div class="row text-center">
+         <div class="col-xs-4 col-md-4 col-sm-4">
+           <div class="counter1">
+            <i class="fa fa-users fa-2x"></i>
+            <h2 class="timer count-title count-number" data-to="30" data-speed="1500"></h2>
+            <p class="count-text ">Total Appointments</p>
           </div>
-          <div class="col">
-            <div class="patient4">
-              <p id ="Patient4_Name"> Name :  </p>
-              <p id ="Patient4_Info"> Info : </p>
-              <p id ="ChatNowButton4"> <button type="button" class="btn btn-info">Chat Now</button></p>
+        </div>
+        <div class="col-xs-4 col-md-4 col-sm-4">
+          <div class="counter2">
+            <i class="fa fa-medkit fa-2x"></i>
+            <h2 class="timer count-title count-number" data-to="5" data-speed="1500"></h2>
+            <p class="count-text ">Diagnoses Done</p>
+          </div>
+         </div>
+         <div class="col-xs-4 col-md-4 col-sm-4">
+           <div class="counter3">
+             <i class="fa fa-rupee fa-2x"></i>
+             <h2 class="timer count-title count-number" data-to="1000" data-speed="1500"></h2>
+             <p class="count-text ">Total Amount</p>
            </div>
          </div>
-         <div class="col">
-           <div class="patient5">
-             <p id ="Patient5_Name"> Name :  </p>
-             <p id ="Patient5_Info"> Info : </p>
-             <p id ="ChatNowButton5"> <button type="button" class="btn btn-info">Chat Now</button></p>
-          </div>
-          <div class="col">
-            <div class="patient6">
-              <p id ="Patient6_Name"> Name :  </p>
-              <p id ="Patient6_Info"> Info : </p>
-              <p id ="ChatNowButton6"> <button type="button" class="btn btn-info">Chat Now</button></p>
+         <div class="col-xs-4 col-md-4 col-sm-4">
+           <div class="counter4">
+             <i class="fa fa-star fa-2x"></i>
+             <h2 class="timer count-title count-number" data-to="4.2" data-speed="1500"></h2>
+             <p class="count-text ">Average Rating</p>
            </div>
-          </div>
-           </div>
+         </div>
+      </div>
+      <div class="col-xs-4 col-md-4 col-sm-4" id="chart_div"></div>
+   </div>
 
-    </div>
-</div>
-</div>
-    </body>
-    </html>
+</body>
+</html>
