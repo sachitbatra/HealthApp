@@ -265,9 +265,9 @@ input[type=text]:focus {
 
 .container {
   position: relative;
-  top : 50px;
+  top : 10px;
   width: 1000px;
-  right :160px;
+  right :270px;
 }
 
 .panel-body {

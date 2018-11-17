@@ -173,6 +173,25 @@ a.link.active {
 
 }
 
+.main1 {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: 0px;
+  margin: auto;
+  color : black;
+}
+.main1 h1{
+   font-family: "Montserrat", sans-serif;
+   font-size: 22px;
+   color: "black";
+}
+
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
@@ -268,8 +287,8 @@ ul li a:hover,ul li a:focus{
 
 #if{
   position: relative;
-  right: 200px;
+  right: 240px;
   height: 530px;
-  width: 1000px;
+  width: 1070px;
   border :none;
 }
