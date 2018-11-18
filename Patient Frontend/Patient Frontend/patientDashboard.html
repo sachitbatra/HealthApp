@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Health And Fitness Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="css/patientDashboard.css" rel="stylesheet">
+  
+   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">App Name</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ABC!</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center" style="height:100%">    
+  <div class="row content" style="height:100%">
+   <div class="col-sm-2 sidenav"style="background-color:black;">
+      <p class="active"><a>Notifications</a></p>
+      <p><a href="bookAppointment.html">Book an Appointment</a></p>
+      <p><a href="updatePatientInformation.html">Update Profile</a></p>
+       <p><a href="#">Sign Out</a></p>
+    </div>
+    <div class="col-sm-10 "> 
+    <!--nnnnn-->
+     <div class="row">
+ 
+     	<div class="col-sm-12 ">
+     	<div id="notifications">
+     	 <!--  
+     	<div class="badger-left" data-badger="Pill Reminder">Block with notification 1</div>
+        <div class="badger-left" data-badger="Pill Reminder">Block with notification 2</div>
+        <div class="badger-left" data-badger="Appointment Reminder">Block with badger 3</div>
+        <div class="badger-left" data-badger="Appointment Reminder">Block with badger 4</div>
+       -->
+     	</div>
+     	
+     	</div>
+     </div>
+     <!-- nnnnn-->
+    </div>
+ 
+  </div>
+
+
+</div>
+
+  <footer class="container-fluid text-center">
+ <footer class="container-fluid text-center">
+  <h4 text-align="center">Contact Us</h4><br>
+  <B> Address :</B> <adress> A108 Adam Street, NY 535022, USA</address>&nbsp&nbsp&nbsp
+  <B> Phone Number:</B> <a href="tel:+155895548855"  style="color: white">+1 5589 55488 55</a>
+  &nbsp&nbsp&nbsp 
+  <B> E-mail ID: </B> <a href="mailto:info@example.com" style="color: white">info@example.com</a
+  
+  
+  
+</footer> 
+</footer> 
+</body>
+
+<script>
+var notification_list = [["Pill Reminder","Seroflo 250 2 times a day"],["Pill Reminder", "Dolo 650mg 2 times, after meal"],["Appointment Reminder","Appointment with Dr. James on 14th Nov 2018 6:30pm" ] ]
+
+for (var i=0;i<notification_list.length;i++) {
+  
+	var new_notification = document.createElement("div");
+	new_notification.setAttribute("class","badger-left");
+	new_notification.setAttribute("id","badger-left");
+	new_notification.setAttribute("onclick","this.style.display='none'");
+	new_notification.setAttribute("data-badger",notification_list[i][0]);
+	var node=document.createTextNode(notification_list[i][1]);
+	new_notification.appendChild(node);
+	var tab=document.getElementById("notifications");
+	
+	tab.appendChild(new_notification);
+}
+
+
+
+</script>
+</html>
+
