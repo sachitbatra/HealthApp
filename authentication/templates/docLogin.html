@@ -1,5 +1,3 @@
-{% load crispy_forms_tags %}
-
 <html>
 <head>
 	<title> Login </title>
@@ -50,7 +48,7 @@
 						<div>
 								{{ message }}
 						</div>
-					<form method="POST" action = "{%url 'user_login'%}">
+					<form method="POST" action = "{%url 'doc_login'%}">
 							{% csrf_token %}
 						<div class="input-group form-group">
 							<input id="email" type="text" class="form-control" placeholder="email id" name="email_address" value={{ email_address }}>
@@ -61,31 +59,22 @@
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Login" class="btn float-center login_btn">
-						</div> 
-
-						
-						
-
+						</div>	
 					</form>
 					<div class="card-footer">
 							<div class="d-flex justified-content-center links">
 								Don't have an account?<a href="signUpPatient.html">Sign Up</a>
-							</div>
-							<br>
-							<br>
-							{% if messages %}
+                            </div>
+                            {% if messages %}
 								<ul class="messages">
 									{% for message in messages %}
-									<div class="text-danger" >
-										<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}<p>
-									</div>
+										<li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
 									{% endfor %}
 								</ul>
 							{% endif %}
-						</div>
+					</div>
 			</div>
 		</div>
 	</div>
 </body>
 </html>
-

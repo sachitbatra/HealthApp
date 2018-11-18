@@ -9,7 +9,7 @@
 
 
   <!-- Favicons -->
-  <link href="/static/img/favicon.png" rel="icon">
+  <link href="/static/" rel="icon">
   <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -29,6 +29,7 @@
   <!-- Main Stylesheet File -->
   <link href="/static/css/style.css" rel="stylesheet">
   <link href="/static/css/dashboard.css" rel="stylesheet">
+  <link href="/static/css/statistics.css" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -37,37 +38,42 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
   <script type="text/javascript" src="/static/js/dashboard.js"></script>
+  <script type="text/javascript" src="/static/js/linearchart.js"></script>
 </head>
 <body>
-  <div class = "header_content">
-    <header id="header">
-      <div class="container-fluid">
-        <div id="logo" class="pull-left">
-          <h1><a href="#intro" class="scrollto">AppName</a></h1>
-          <!-- Uncomment below if you prefer to use an image logo -->
-          <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+  <div class="container">
+     <div class="row text-center">
+         <div class="col-xs-4 col-md-4 col-sm-4">
+           <div class="counter1">
+            <i class="fa fa-users fa-2x"></i>
+            <h2 class="timer count-title count-number" data-to="30" data-speed="1500"></h2>
+            <p class="count-text ">Total Appointments</p>
+          </div>
         </div>
-        <nav id="nav-menu-container" >
-          <ul class="nav-menu">
-            <li>Welcome Jim!</li>
-            <li id="profile"><img src="/static/img/dashboard_profile.jpg"  alt="" title="" /></li>
-          </ul>
-        </nav><!-- #nav-menu-container -->
+        <div class="col-xs-4 col-md-4 col-sm-4">
+          <div class="counter2">
+            <i class="fa fa-medkit fa-2x"></i>
+            <h2 class="timer count-title count-number" data-to="5" data-speed="1500"></h2>
+            <p class="count-text ">Diagnoses Done</p>
+          </div>
+         </div>
+         <div class="col-xs-4 col-md-4 col-sm-4">
+           <div class="counter3">
+             <i class="fa fa-rupee fa-2x"></i>
+             <h2 class="timer count-title count-number" data-to="1000" data-speed="1500"></h2>
+             <p class="count-text ">Total Amount</p>
+           </div>
+         </div>
+         <div class="col-xs-4 col-md-4 col-sm-4">
+           <div class="counter4">
+             <i class="fa fa-star fa-2x"></i>
+             <h2 class="timer count-title count-number" data-to="4.2" data-speed="1500"></h2>
+             <p class="count-text ">Average Rating</p>
+           </div>
+         </div>
       </div>
-    </header><!-- #header -->
-  </div>
-    <div class = "sidenav">
-      <a href="statistic.html" target="iframe" class ="link" >Statistics</a>
-      <a href="{% url 'doctor_core:ongoing_consultations'%}" target="iframe" class="link" >Current Consulations</a>
-      <a href="{% url 'doctor_core:previous_consultations' %}" target="iframe" class="link">Previous Consulations</a>
-      <!-- <a href="update_schedule.html" target="iframe" class="link">Update Schedule</a> -->
-      <a href="{% url 'doctor_core:feedback'%}" target="iframe" class="link">View Feedback</a>
-      <a href="#co" target="iframe" class="link">Update Profile</a>
-      <a href="{% url 'logout'%}">SignOut</a>
-    </div>
-    <div class="main">
-    <iframe src="{% url 'doctor_core:stats'%}" id="if" name="iframe" >
-    </iframe>
-  </div>
+      <div class="col-xs-4 col-md-4 col-sm-4" id="chart_div"></div>
+   </div>
+
 </body>
 </html>

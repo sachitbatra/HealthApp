@@ -19,7 +19,7 @@ def signed_in(request):
         except:
             #messages.error(request,"Something went wrong in getting the doctor data")
             return HttpResponse("Looks like something went wrong!")
-        return render(request,"success.html",{"doctor":doctor})
+        return render(request,"dashboard.html",{"doctor":doctor})
     return HttpResponse("Looks like something went wrong!")
 
 def view_profile(request):
@@ -129,3 +129,13 @@ def view_feedback(request):
         page = request.GET.get('page')
         feedback = paginator.get_page(page)
         return render(request, "review.html",{'reviews':feedback})
+
+def view_stats(request):
+    logged_in = check_doc_token_validation(request)
+    doctor = None
+    if logged_in:
+        try:
+            doctor = get_doctor(request)
+        except:
+            return logged_in
+        return render(request,"statistic.html")
