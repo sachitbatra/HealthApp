@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'authentication',
     'consultation',
     'channels',
+    'crispy_forms',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,7 +83,7 @@ ASGI_APPLICATION = "HealthApp.routing.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'healthdb',
+        'NAME': 'healthdatabase',
         'USER': 'root',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
@@ -129,6 +130,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    #'/var/www/static/',
+]
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

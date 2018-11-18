@@ -1,0 +1,114 @@
+  /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      
+      padding-top: 0px;
+       padding-left: 0px;
+      padding-right: 0px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+ 
+    .sidenav p {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #FFFFFF;
+    display: block;
+    margin-bottom:0px;
+}
+.sidenav a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #FFFFFF;
+    display: block;
+}
+  .sidenav  .active {
+  background-color: #18d26e;
+  color: white;
+}
+.deactive {
+  background-color: #FFFFFF;
+  color: #f1f1f1;
+}
+    .sidenav p:hover {
+    background-color: #18d26e;
+    color: white;
+}
+  
+    
+    
+#notifications div {
+    margin: 15px 0;
+    padding: 33px 15px 15px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, .64)
+}
+
+/* Badger
+------------------------- */
+
+[class*="badger"] {
+    position: relative
+}
+
+[class*="badger"]:after {
+    content: attr(data-badger);
+    position: absolute;
+    top: 0;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #999;
+    color: #fff
+}
+
+.badger-left {
+    border-top-left-radius: 6px
+    
+}
+
+
+
+.badger-left:after {
+    left: 0;
+    border-radius: 6px 0 6px 0
+}
+
+
+    
+    
+    
+    
+ 
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+      
+    }

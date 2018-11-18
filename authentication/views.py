@@ -110,7 +110,7 @@ def user_login_view(request):
                 return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         login_form = LogInForm()
-        return render(request, 'UserLogin.html', {'form': login_form})
+        return render(request, 'login.html', {'form': login_form})
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)

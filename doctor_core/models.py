@@ -1,7 +1,8 @@
 from django.db import models
 from django.db.models import Avg, Count
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from datetime import timedelta
+from django.utils import timezone
 from authentication.models import UserModel,DoctorModel
 # Create your models here.
 
@@ -29,10 +30,22 @@ class DoctorProfile(models.Model):
 class Consultation(models.Model):
     doctor = models.ForeignKey(DoctorModel, on_delete=models.CASCADE, related_name='doctor')
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='patient')
-    no_days = models.IntegerField(default=3,validators=[MaxValueValidator(5), MinValueValidator(3)])
+    no_days = models.IntegerField(default=3,validators=[MaxValueValidator(5), MinValueValidator(0)])
     created_on = models.DateTimeField(auto_now_add=True)
     diagnosis = models.TextField(blank=True)
     notes = models.TextField(blank=True)
+    ended = models.BooleanField(default=False)
+
+    @property
+    def ongoing(self):
+        if not self.ended:
+            return self.created_on + timedelta(days=self.no_days) > timezone.now()
+        else:
+            return False
+    @property
+    def time_left(self):
+        td_left = self.created_on + timedelta(days=self.no_days) - timezone.now()
+        return str(td_left.days) + " days " + str(td_left.seconds//3600) + " hrs "
 
     def __str__(self):
         return self.doctor.name + "-" + self.user.name
@@ -60,7 +73,7 @@ class FeedBack(models.Model):
     )
 
     def __str__(self):
-        return self.consultation
+        return self.consultation.user.name
 
 
 

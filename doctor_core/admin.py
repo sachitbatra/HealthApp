@@ -4,3 +4,5 @@ from django.contrib import admin
 from .models import DoctorProfile,Consultation,FeedBack
 
 admin.site.register(DoctorProfile)
+admin.site.register(Consultation)
+admin.site.register(FeedBack)
