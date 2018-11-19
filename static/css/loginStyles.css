@@ -135,6 +135,13 @@ margin-left: 4px;
   margin: 0;
 }
 
+ footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+
 @media (max-width: 768px) {
   #header #logo h1 {
     font-size: 28px;

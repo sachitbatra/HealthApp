@@ -23,7 +23,8 @@
 
 <script>
     console.log(window.location);
-
+    var curUser = "{{curUser}}";
+    console.log(curUser);
     var wsStart = "ws://" + window.location.host + window.location.pathname;
     var socket = new WebSocket(wsStart);
 

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'doctor_core',
     'authentication',
     'consultation',
+    'user_core',
     'channels',
     'crispy_forms',
     'rest_framework',

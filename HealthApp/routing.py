@@ -9,7 +9,7 @@ application = ProtocolTypeRouter({
         SessionMiddlewareStack(
             URLRouter(
                 [
-                    url(r"^consultation/(?P<username>[\w.@+-]+)/$", ChatConsumer)
+                    url(r"^consultations/(?P<username>[\w.@+-]+)/$", ChatConsumer)
                 ]
             )
         )

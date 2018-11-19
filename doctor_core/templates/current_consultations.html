@@ -37,42 +37,18 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
-  <script type="text/javascript" src="js/dashboard.js"></script>
+  <script type="text/javascript" src="/static/js/dashboard.js"></script>
 </head>
 <body>
-  <div class = "header_content">
-    <header id="header">
-      <div class="container-fluid">
-        <div id="logo" class="pull-left">
-          <h1><a href="#intro" class="scrollto">AppName</a></h1>
-          <!-- Uncomment below if you prefer to use an image logo -->
-          <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
-        </div>
-        <nav id="nav-menu-container" >
-          <ul class="nav-menu">
-            <li>Welcome Jim!</li>
-            <li id="profile"><img src="img/dashboard_profile.jpg"  alt="" title="" /></li>
-          </ul>
-        </nav><!-- #nav-menu-container -->
-      </div>
-    </header><!-- #header -->
-  </div>
-    <div class = "sidenav">
-      <a href="dashboard.html">Statistics</a>
-      <a class = "active">Current Consulations</a>
-      <a href="previous_consultations.html">Previous Consulations</a>
-      <a href="update_schedule.html">Update Schedule</a>
-      <a href="feedback.html">View Feedback</a>
-      <a href="#contact">Update Profile</a>
-      <a href="index.html">SignOut</a>
-    </div>
     <div class = "main">
       <div class="container">
 		     <div class="row text-center">
             {% if consultations.0 %}
              <div class="col">
                <div class="patient1">
-                   <p id ="Patient1_Name"> Name : {{consultations.0}} </p>
+                   <p id ="Patient1_Name"> Patient :  {{consultations.0.user}}  <br>
+                    Doctor : {{consultations.0.doctor}}
+                  </p>
                    <p id ="Patient1_Info"> Info : </p>
                    <p id ="ChatNowButton1"> <button type="button" class="btn btn-info">Chat Now</button></p>
               </div>
@@ -81,41 +57,47 @@
             {% if consultations.1 %}
             <div class="col">
               <div class="patient2">
-                <p id ="Patient2_Name"> Name : {{consultations.1}} </p>
+                  <p id ="Patient2_Name"> Patient :  {{consultations.1.user}}  <br>
+                    Doctor : {{consultations.1.doctor}}
+                  </p>
                 <p id ="Patient2_Info"> Info : </p>
                 <p id ="ChatNowButton2"> <button type="button" class="btn btn-info">Chat Now</button></p>
              </div>
            </div>
-           {% endif %}
-           {% if consultations.2 %}
+           {%endif%}
+           {% if consultations.2%}
            <div class="col">
              <div class="patient3">
-               <p id ="Patient3_Name"> Name : {{consultations.2}} </p>
+                <p id ="Patient3_Name"> Patient :  {{consultations.2.user}}  <br>
+                  Doctor : {{consultations.2.doctor}}
+                </p>
                <p id ="Patient3_Info"> Info : </p>
                <p id ="ChatNowButton3"> <button type="button" class="btn btn-info">Chat Now</button></p>
             </div>
           </div>
-          {% endif %}
-          {% if consultations.3 %}
+          {%endif%}
+          {%if consultations.3%}
           <div class="col">
             <div class="patient4">
-              <p id ="Patient4_Name"> Name : {{consultations.3}} </p>
+                <p id ="Patient4_Name"> Patient :  {{consultations.4.user}}  <br>
+                  Doctor : {{consultations.4.doctor}}
+                </p>
               <p id ="Patient4_Info"> Info : </p>
               <p id ="ChatNowButton4"> <button type="button" class="btn btn-info">Chat Now</button></p>
            </div>
          </div>
-         {% endif %}
-         {% if consultations.4 %}
+         {%endif%}
+         {%if consultations.4%}
          <div class="col">
            <div class="patient5">
-             <p id ="Patient5_Name"> Name : {{consultations.4}} </p>
+              <p id ="Patient5_Name"> Patient :  {{consultations.4.user}}  <br>
+                Doctor : {{consultations.4.doctor}}
+              </p>
              <p id ="Patient5_Info"> Info : </p>
              <p id ="ChatNowButton5"> <button type="button" class="btn btn-info">Chat Now</button></p>
           </div>
-        </div>
-          {%endif%}
-          
-
+           </div>
+           {%endif%}
     </div>
 </div>
 </div>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Health And Fitness Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="css/patientDashboard.css" rel="stylesheet">
+    <link href="css/bookAppointment.css" rel="stylesheet">
+  
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">App Name</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ABC!</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center" style="height:100%">    
+  <div class="row content" style="height:100%">
+   <div class="col-sm-2 sidenav"style="height:100%; background-color:black;">
+      <p ><a href="patientDashboard.html">Notifications</a></p>
+      <p><a href="bookAppointment.html">Book an Appointment</a></p>
+      <p class="active"><a>Update Profile</a></p>
+       <p><a href="#">Sign Out</a></p>
+    </div>
+    <div class="col-sm-10 "> 
+    
+    	
+    <form class="form-horizontal" action=" " method="post"  id="contact_form">
+<fieldset>
+
+<!-- Form Name -->
+<legend><center><h4><b>Update your info here</b></h4></center></legend>
+
+<!-- Text input-->
+
+<div class="form-group" style="margin-top:40px">
+  <label class="col-md-4 control-label">First Name</label>  
+  <div class="col-md-4 inputGroupContainer">
+  <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+  <input  name="first_name" placeholder="First Name" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+
+<div class="form-group"style="margin-top:40px">
+  <label class="col-md-4 control-label" >Last Name</label> 
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+  <input name="last_name" placeholder="Last Name" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+
+<!--Text Input-->
+<div class="form-group" style="margin-top:40px">
+	<label class="col-md-4 control-label"> Gender </label>
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<input type="radio" name="gender" required>Male </label>
+	<input type="radio" name="gender" required>Female</label>
+	</div>
+ 	</div>
+ </div>
+ 
+ 
+	
+
+  <!-- Text input-->
+
+<div class="form-group" style="margin-top:40px">
+	<label class="col-md-4 control-label"> Date of Birth </label>
+		<div class="col-md-4 inputGroupContainer">
+			 <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+               </div>
+          </div>
+   </div>            
+		
+  
+
+
+
+<!-- Text input-->
+       <div class="form-group" style="margin-top:40px">
+  <label class="col-md-4 control-label">E-Mail</label>  
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+  <input name="email" placeholder="E-Mail Address" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+
+
+<!-- Text input-->
+       
+<div class="form-group" style="margin-top:40px">
+  <label class="col-md-4 control-label">Contact No.</label>  
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+  <input name="contact_no" placeholder="(639)" class="form-control" type="text">
+    </div>
+  </div>
+</div>
+
+<!-- Select Basic -->
+
+
+
+<!-- Button -->
+<div class="form-group" style="margin-top:40px">
+  <label class="col-md-4 control-label"></label>
+  <div class="col-md-4"><br>
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+    			
+    </div>
+ 
+  </div>
+</div>
+<footer class="container-fluid text-center">
+  <footer class="container-fluid text-center">
+  <h4 text-align="center">Contact Us</h4><br>
+  <B> Address :</B> <adress> A108 Adam Street, NY 535022, USA</address>&nbsp&nbsp&nbsp
+  <B> Phone Number:</B> <a href="tel:+155895548855"  style="color: white">+1 5589 55488 55</a>
+  &nbsp&nbsp&nbsp 
+  <B> E-mail ID: </B> <a href="mailto:info@example.com" style="color: white">info@example.com</a
+  
+  
+  
+</footer> 
+</footer> 
+</body>
+</html>
+

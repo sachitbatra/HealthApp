@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from .forms import *
 from .models import *
 from django.utils import timezone
@@ -128,7 +128,7 @@ def user_login_view(request):
                     session_token.save()
 
                     request.session['session_token'] = session_token.session_token  # Using Session Middleware
-                    response = redirect('success.html')  # TODO: DashBoard
+                    response = redirect('/user/signed_in')  # TODO: DashBoard
                     # response.set_cookie(key="session_token", value=session_token.session_token)
                     return response  # TODO: Redirect to User Dashboard
                 else:
@@ -274,9 +274,30 @@ def doc_login_view(request):
 
 def logout_view(request):
     if request.method == "GET":
+        redirect_url = None
+        try:
+            logged_in = check_user_token_validation(request)
+            if logged_in:
+                try:
+                    user = get_user(request)
+                    redirect_url = '/login'
+                except:
+                    return HttpResponseRedirect('/login')
+
+        except:
+            try:
+                logged_in = check_doc_token_validation(request)
+                if logged_in:
+                    try:
+                        doctor = get_doctor(request)
+                        redirect_url = '/doc/login'
+                    except:
+                        return HttpResponseRedirect('/doc/login')
+            except:
+                return HttpResponse("something went wrong")
         del request.session['session_token']
         request.session.modified = True
-        return HttpResponseRedirect('/login')
+        return HttpResponseRedirect(redirect_url)
     else:
         raise Http404
 

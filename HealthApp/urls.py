@@ -35,6 +35,7 @@ urlpatterns = [
     url('doctor/',include("doctor_core.urls")),
     url('consultations/', include('consultation.urls')),
     path('admin/', admin.site.urls),
+    url('user/',include("user_core.urls")),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
