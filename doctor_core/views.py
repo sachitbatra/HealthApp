@@ -52,7 +52,7 @@ def create_profile(request):
             image = profile_form.cleaned_data["image"]
             profile = DoctorProfile(user = doctor, bio = bio,phone_no = phone_no,image = image)
             profile.save()
-            response = redirect('/doctor/view_profile')
+            response = redirect('/doctor/edit_profile')
             return response
         else:
             #return redirect('/error', message="Invalid Data Submitted")  # TODO: Create Error HTML File
@@ -67,7 +67,10 @@ def edit_profile(request):
         except:
             return HttpResponse("Looks like something went wrong in retrieving the user details from session database")
         profile = DoctorProfile.objects.filter(user_id = doctor.id).first()
-        profile_form = CreateProfile(request.POST or None,initial={'bio':profile.bio,'phone_no':profile.phone_no,'image':profile.image})
+        if profile:
+            profile_form = CreateProfile(request.POST or None,initial={'bio':profile.bio,'phone_no':profile.phone_no,'image':profile.image})
+        else:
+            return redirect('/doctor/create_profile')
     elif request.method == 'POST':
         profile_form = CreateProfile(request.POST,request.FILES)
         doctor = None
@@ -84,9 +87,9 @@ def edit_profile(request):
         if profile_form.cleaned_data["image"]:
             profile.image = profile_form.cleaned_data["image"]
         profile.save()
-        response = redirect('/doctor/view_profile')
+        response = redirect('/doctor/edit_profile')
         return response
-    return render(request,"profile_edit.html",{'form':profile_form})
+    return render(request,"profile_edit.html",{'form':profile_form,'profile':profile})
 
 def view_ongoing_consultations(request):
     logged_in = check_doc_token_validation(request)

@@ -13,73 +13,48 @@
 
 </head>
 <body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">App Name</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-    
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ABC!</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-<div class="container-fluid text-center" style="height:100%">    
-  <div class="row content" style="height:100%" >
-   <div class="col-sm-2 sidenav"style="height:100% ; background-color:black; ">
-      <p ><a href="patientDashboard.html">Notifications</a></p>
-      <p class="active"><a >Book an Appointment</a></p>
-      <p><a href="updatePatientInformation.html">Update Profile</a></p>
-       <p><a href="#">Sign Out</a></p>
-    </div>
-    
-    <div class="col-sm-10 "> 
-    			<div class="row">
-    				<div class="col-sm-12">
-    				<br>
-    		<div id="imaginary_container"> 
-                    <form action="" class="form-inline">
-							<input type="text" class="form-control" name="query" id="searchdoctor"  placeholder="Search for Doctor" >
-							<button type="submit" class="btn btn-primary mb-2">Submit</button>
-					</form>
-            </div>
-    				
+<div class="col-sm-10 "> 
+    			<div class="row ">
+    				<div class="col-sm-7 col-sm-offset-3"><br>
+						<div id="imaginary_container"> 
+							<form action="{%url 'user_core:search'%}" class="form-inline">
+								
+									<div class="col-lg-12">
+									<input type="text" class="form-control-lg" name="query" id="searchdoctor"  placeholder="Search for Doctor or specialization" >
+									<button type="submit" class="btn btn-primary mb-2">Submit</button>
+									</div>
+									
+							</form>
+						</div>
     				</div>
-    			</div>
+				</div>
+				<br>
+				<br>
     			<!-- nanananan -->
     			
     			<!-- <div class="row">
-    				<div class="col-sm-6 col-sm-offset-3">
-    					<br>
-    						<div class="form-group">
-  								<label for="sel1">Type of Doctor:</label>
-  									<select class="form-control" id="sel1">
-    									<option>General</option>
- 									   <option>Paediatric</option>
-    									<option>Cardio</option>
-    									<option>Neuro</option>
-    									<option> Ortho </option>
- 									 </select>
-							</div>
-							<div class="form-group">
-								<button type="submit"   id="search_button" onclick="searchDoctorByType()" > Search </button>
-							</div>
+    					<div class="col-sm-6 col-sm-offset-3"><br>
+    							<div class="form-group">
+  										<label for="sel1">Type of Doctor:</label>
+  										<select class="form-control" id="sel1">
+    											<option>General</option>
+ 									  			<option>Paediatric</option>
+    											<option>Cardio</option>
+    											<option>Neuro</option>
+    											<option> Ortho </option>
+ 									 	</select>
+								</div>
+								<div class="form-group"> 
+										<button type="submit"   id="search_button" onclick="searchDoctorByType()" > Search </button>
+								</div>
 						</div>
 				</div> -->
     			<!-- heheheeh -->
     			
-    			<!-- starting of display docs -->
-    		    <div class="row justify-content-center">
-					<div class="col-sm-10 col-sm-offset-2">
+				<!-- starting of display docs -->
+				
+				<div class="row justify-content-center">
+					<div class="col-sm-12">
 					<div id="doctors_tab">
 				{%if doctors%}
 				<div id="accordion">
@@ -88,17 +63,17 @@
 						<div class="col-md-3 text-center">   
 							<div class="panel panel-success panel-pricing"> 
 								<div class="panel-heading"> 
-								   <a href="#collapse1" data-toggle="collapse" data-parent="#accordion" style="text-decoration: none">
+								   <a href="#collapse{{forloop.counter}}" data-toggle="collapse" data-parent="#accordion" style="text-decoration: none">
 									<h4>{{doctor.name}}</h4>  </a>
 								</div>
-								<div id="collapse1" class="panel-collapse collapse">
+								<div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
 									<ul class="list-group text-center">  
 										<li class="list-group-item">{{doctor.specialization}}</li> 
 										<li class="list-group-item">{{doctor.experience}} years of experience </li>
 										<!-- <li class="list-group-item"> Available</li> -->
 									</ul>
 									<div class="panel-footer"> 
-										<a class="btn btn-lg btn-block btn-success" href="#">Chat</a> 
+										<a class="btn btn-lg btn-block btn-success" href="{%url 'user_core:go_to_chat'%}?doctor_id={{doctor.id}}">Chat</a> 
 									</div>
 								</div>
 							</div>
@@ -115,33 +90,58 @@
 				</div>
 						
 			</div>
-   <!-- doctor list is displayed here -->
+
+
+
+
+
+    			<!-- <div class="row">
+    					<div class="col-md-12">
+    							<div id="doctors_tab">
+                					<div class="col-md-4 text-center">   
+                    						<div class="panel panel-success panel-pricing"> 
+                        							<div class="panel-heading">                         
+                            								<h4>Dr. James Francis</h4>  
+                        							</div>
+                        							<ul class="list-group text-center">  
+															<li class="list-group-item">General Physician</li> 
+															<li class="list-group-item">12 years of experience </li>
+															<li class="list-group-item"> Available</li>
+                        							</ul>
+                       						 		<div class="panel-footer"> 
+                            							<a class="btn btn-lg btn-block btn-success" href="#">Book Appointment</a> 
+                        							</div>
+                    						</div>
+                					</div>
+        
+                					<div class="col-md-4 text-center">
+                    						<div class="panel panel-success panel-pricing">
+                        							<div class="panel-heading">               
+                            								<h4>Dr. James Francis</h4>
+                        							</div>
+                        							<ul class="list-group text-center">
+															<li class="list-group-item"><i class="fa fa-check"></i> General Physician</li>
+															<li class="list-group-item"><i class="fa fa-check"></i> 12 years of experience </li>
+															<li class="list-group-item"><i class="fa fa-check"></i> Available</li>
+                        							</ul>
+                        							<div class="panel-footer">
+                            								<a class="btn btn-lg btn-block btn-success" href="#">Book Appointment</a>
+                        							</div>
+                   		 					</div>
+                					</div>
+                
     		
-    	</div>
-    	</div>
-    			
-    		</div>
+    							</div>
+    					</div>
+    			</div> -->
     			<!-- end of display docs --> 
-    </div>
+    	<!-- </div> -->
     
- 
-  </div>
-</div>
-<footer class="container-fluid text-center">
-  <h4 text-align="center">Contact Us</h4><br>
-  <B> Address :</B> <adress> A108 Adam Street, NY 535022, USA</address>&nbsp&nbsp&nbsp
-  <B> Phone Number:</B> <a href="tel:+155895548855"  style="color: white">+1 5589 55488 55</a>
-  &nbsp&nbsp&nbsp 
-  <B> E-mail ID: </B> <a href="mailto:info@example.com" style="color: white">info@example.com</a
-  
-  
-  
-</footer> 
 
 </body>
 
 <script>
-
+/*
 	//doctors_list={"general":[["James Martin","12 years of experience","Available"],["Andrew Broscheire","3 years of experience","Available",]], "ortho":[["Louis Barter","8 years of experience","Available"]]} 
 	function searchDoctorByName() {
 	 
@@ -347,7 +347,7 @@
 				}
 		}
 	}
-	
+	*/
 </script>
 </html>
 

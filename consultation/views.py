@@ -112,13 +112,15 @@ def select_doctor(request):
 def ongoing_consultations(request):
     user = get_abstract_user(request)
     consultations = None
+    isUser = None
     if user:
         if type(user) == UserModel:
             consultations = Consultation.objects.filter(user_id = user.id)
+            isUser = True
         else:
             consultations = Consultation.objects.filter(doctor_id = user.id)
         ongoing_consultations = [consultation  for consultation in consultations if consultation.ongoing]
-        return render(request,"current_consultations.html",{'consultations':ongoing_consultations})
+        return render(request,"current_consultations.html",{'consultations':ongoing_consultations,'is_user':isUser})
 def past_consultations(request):
     user = get_abstract_user(request)
     consultations = None

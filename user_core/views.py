@@ -5,7 +5,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.db.models import Q
 # Create your views here.
-from authentication.views import check_user_token_validation,get_user
+from authentication.views import check_user_token_validation,get_user,check_user_token_validation
 from authentication.models import UserModel,DoctorModel
 from doctor_core.models import Consultation
 # Create your views here.
@@ -28,6 +28,8 @@ def search_doctor(request):
             Q(name__icontains=query) |
         Q(specialization__icontains=query)
         ).distinct()
+    else:
+        doctors = DoctorModel.objects.all()
     final_list = []
     print(doctors)
     if doctors:
@@ -42,7 +44,20 @@ def search_doctor(request):
     return render(request,"bookAppointment.html",{'doctors':final_list})
 
 def go_to_chat(request):
-    pass
+    print(request.GET.get("doctor_id"))
+    doctor_id = request.GET.get("doctor_id")
+    doctor = DoctorModel.objects.filter(id=doctor_id).first()
+    print(doctor)
+    logged_in = check_user_token_validation(request)
+    user = None
+    if logged_in:
+        try:
+            user = get_user(request)
+        except:
+            return logged_in
+    new_consultation = Consultation(doctor = doctor,user = user,no_days = 1)
+    new_consultation.save()
+    return redirect("http://localhost:8000/consultations/" + doctor.email_address + "/")
 
 
 

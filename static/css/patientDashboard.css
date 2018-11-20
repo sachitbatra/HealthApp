@@ -96,6 +96,13 @@ html,body {
 
     
     
+#if{
+
+  right: 240px;
+  height: 530px;
+   width: 1000px;
+  border :none;
+}
     
     
  

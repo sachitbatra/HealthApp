@@ -41,7 +41,8 @@ class ChatConsumer(AsyncConsumer):
 
             msg_response = {
                 'message': msg_text,
-                'username': self.curUser.name
+                'username': self.curUser.name,
+                'email_address':self.curUser.email_address
             }
 
             await self.create_chat_message(self.curUser, msg_text)

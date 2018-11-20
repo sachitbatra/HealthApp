@@ -3,9 +3,19 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if profile.image %}
+<h2>Profile : </h2>
+<br>
+<img src="{{profile.image.url}}" alt="upload your image" class='rounded-circle mx-auto d-block img-thumbnail' height ='250' width='250'>
+{%else%}
+<img src="/static/img/user2.jpeg" alt="upload your image" class='img-responsive' height ='250' width='250'>
+{%endif%}
+<br>
+<br>
   <form action="{% url 'doctor_core:edit_profile' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
+    <br>
     <button type="submit" class="btn btn-success">Edit profile</button>
   </form>
 {% endblock %}
