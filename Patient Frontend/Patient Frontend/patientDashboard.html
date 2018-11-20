@@ -55,23 +55,20 @@
 <div class="container-fluid text-center" style="height:100%">    
   <div class="row content" style="height:100%">
    <div class="col-sm-2 sidenav"style="background-color:black;">
-      <p class="active"><a>Notifications</a></p>
-      <p><a href="bookAppointment.html">Book an Appointment</a></p>
-      <p><a href="updatePatientInformation.html">Update Profile</a></p>
-       <p><a href="#">Sign Out</a></p>
+      <p><a href="notifications.html" target="iframe" class="link" >Notifications</a></p>
+      <p><a href="bookAppointment.html" target="iframe" class="link" >Book an Appointment</a></p>
+      <p><a href="updatePatientInformation.html" target="iframe" class="link">Update Profile</a></p>
+       <p><a href="index.html">Sign Out</a></p>
     </div>
     <div class="col-sm-10 "> 
     <!--nnnnn-->
      <div class="row">
  
      	<div class="col-sm-12 ">
-     	<div id="notifications">
-     	 <!--  
-     	<div class="badger-left" data-badger="Pill Reminder">Block with notification 1</div>
-        <div class="badger-left" data-badger="Pill Reminder">Block with notification 2</div>
-        <div class="badger-left" data-badger="Appointment Reminder">Block with badger 3</div>
-        <div class="badger-left" data-badger="Appointment Reminder">Block with badger 4</div>
-       -->
+     	<div  class="main">
+     	<iframe src="notifications.html" id="if" name="iframe" >
+     	</iframe>
+     	 
      	</div>
      	
      	</div>
@@ -94,29 +91,10 @@
   
   
   
-</footer> 
+
 </footer> 
 </body>
 
-<script>
-var notification_list = [["Pill Reminder","Seroflo 250 2 times a day"],["Pill Reminder", "Dolo 650mg 2 times, after meal"],["Appointment Reminder","Appointment with Dr. James on 14th Nov 2018 6:30pm" ] ]
 
-for (var i=0;i<notification_list.length;i++) {
-  
-	var new_notification = document.createElement("div");
-	new_notification.setAttribute("class","badger-left");
-	new_notification.setAttribute("id","badger-left");
-	new_notification.setAttribute("onclick","this.style.display='none'");
-	new_notification.setAttribute("data-badger",notification_list[i][0]);
-	var node=document.createTextNode(notification_list[i][1]);
-	new_notification.appendChild(node);
-	var tab=document.getElementById("notifications");
-	
-	tab.appendChild(new_notification);
-}
-
-
-
-</script>
 </html>
 

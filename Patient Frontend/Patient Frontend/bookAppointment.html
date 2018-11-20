@@ -13,105 +13,90 @@
 
 </head>
 <body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">App Name</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-    
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ABC!</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-<div class="container-fluid text-center" style="height:100%">    
-  <div class="row content" style="height:100%" >
-   <div class="col-sm-2 sidenav"style="height:100% ; background-color:black; ">
-      <p ><a href="patientDashboard.html">Notifications</a></p>
-      <p class="active"><a >Book an Appointment</a></p>
-      <p><a href="updatePatientInformation.html">Update Profile</a></p>
-       <p><a href="#">Sign Out</a></p>
-    </div>
-    
-    <div class="col-sm-10 "> 
+<div class="col-sm-10 "> 
     			<div class="row">
-    				<div class="col-sm-12">
-    				<br>
-    		<div id="imaginary_container"> 
-                <div class="input-group stylish-input-group">
-                    <input type="text" class="form-control" id="searchdoctor"  placeholder="Search for Doctor" >
-                    <span class="input-group-addon">
-                        <button type="submit" onclick="searchDoctorByName()">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>  
-                    </span>
-                </div>
-            </div>
-    				
+    				<div class="col-sm-12"><br>
+    						<div id="imaginary_container"> 
+                					<div class="input-group stylish-input-group">
+                    						<input type="text" class="form-control" id="searchdoctor"  placeholder="Search for Doctor" >
+                    						<span class="input-group-addon">
+                        							<button type="submit" onclick="searchDoctorByName()">
+                            								<span class="glyphicon glyphicon-search"></span>
+                        							</button>  
+                   			 				<	/span>
+               						</div>
+            				</div>
     				</div>
     			</div>
     			<!-- nanananan -->
     			
     			<div class="row">
-    				<div class="col-sm-6 col-sm-offset-3">
-    					<br>
-    						<div class="form-group">
-  								<label for="sel1">Type of Doctor:</label>
-  									<select class="form-control" id="sel1">
-    									<option>General</option>
- 									   <option>Paediatric</option>
-    									<option>Cardio</option>
-    									<option>Neuro</option>
-    									<option> Ortho </option>
- 									 </select>
-							</div>
-							<div class="form-group">
-								<button type="submit"   id="search_button" onclick="searchDoctorByType()" > Search </button>
-							</div>
+    					<div class="col-sm-6 col-sm-offset-3"><br>
+    							<div class="form-group">
+  										<label for="sel1">Type of Doctor:</label>
+  										<select class="form-control" id="sel1">
+    											<option>General</option>
+ 									  			<option>Paediatric</option>
+    											<option>Cardio</option>
+    											<option>Neuro</option>
+    											<option> Ortho </option>
+ 									 	</select>
+								</div>
+								<div class="form-group"> 
+										<button type="submit"   id="search_button" onclick="searchDoctorByType()" > Search </button>
+								</div>
 						</div>
 				</div>
     			<!-- heheheeh -->
     			
     			<!-- starting of display docs -->
-    		<div class="row">
-    		<div class="col-md-12">
-    		<div id="doctors_tab">
-   <!-- doctor list is displayed here -->
+    			<div class="row">
+    					<div class="col-md-12">
+    							<div id="doctors_tab">
+                					<div class="col-md-4 text-center">   
+                    						<div class="panel panel-success panel-pricing"> 
+                        							<div class="panel-heading">                         
+                            								<h4>Dr. James Francis</h4>  
+                        							</div>
+                        							<ul class="list-group text-center">  
+															<li class="list-group-item">General Physician</li> 
+															<li class="list-group-item">12 years of experience </li>
+															<li class="list-group-item"> Available</li>
+                        							</ul>
+                       						 		<div class="panel-footer"> 
+                            							<a class="btn btn-lg btn-block btn-success" href="#">Book Appointment</a> 
+                        							</div>
+                    						</div>
+                					</div>
+        
+                					<div class="col-md-4 text-center">
+                    						<div class="panel panel-success panel-pricing">
+                        							<div class="panel-heading">               
+                            								<h4>Dr. James Francis</h4>
+                        							</div>
+                        							<ul class="list-group text-center">
+															<li class="list-group-item"><i class="fa fa-check"></i> General Physician</li>
+															<li class="list-group-item"><i class="fa fa-check"></i> 12 years of experience </li>
+															<li class="list-group-item"><i class="fa fa-check"></i> Available</li>
+                        							</ul>
+                        							<div class="panel-footer">
+                            								<a class="btn btn-lg btn-block btn-success" href="#">Book Appointment</a>
+                        							</div>
+                   		 					</div>
+                					</div>
+                
     		
-    	</div>
-    	</div>
-    			
-    		</div>
+    							</div>
+    					</div>
+    			</div>
     			<!-- end of display docs --> 
-    </div>
+    	</div>
     
- 
-  </div>
-</div>
-<footer class="container-fluid text-center">
-  <h4 text-align="center">Contact Us</h4><br>
-  <B> Address :</B> <adress> A108 Adam Street, NY 535022, USA</address>&nbsp&nbsp&nbsp
-  <B> Phone Number:</B> <a href="tel:+155895548855"  style="color: white">+1 5589 55488 55</a>
-  &nbsp&nbsp&nbsp 
-  <B> E-mail ID: </B> <a href="mailto:info@example.com" style="color: white">info@example.com</a
-  
-  
-  
-</footer> 
 
 </body>
 
 <script>
-
+/*
 	//doctors_list={"general":[["James Martin","12 years of experience","Available"],["Andrew Broscheire","3 years of experience","Available",]], "ortho":[["Louis Barter","8 years of experience","Available"]]} 
 	function searchDoctorByName() {
 	 
@@ -317,7 +302,7 @@
 				}
 		}
 	}
-	
+	*/
 </script>
 </html>
 
