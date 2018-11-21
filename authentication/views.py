@@ -75,7 +75,7 @@ def user_signup_view(request):
                 return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         signup_form = UserSignUpForm()
-        return render(request, 'UserRegister.html', {'form': signup_form})
+        return render(request, 'userSignUp.html', {'form': signup_form})
 
     elif request.method == "POST":
         signup_form = UserSignUpForm(request.POST)
@@ -94,7 +94,7 @@ def user_signup_view(request):
 
         else:
             messages.error(request, 'Invalid Data Submitted')
-            return HttpResponseRedirect('/error')
+            return HttpResponseRedirect('/signup')
 
 
 def user_login_view(request):

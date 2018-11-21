@@ -43,6 +43,10 @@
     <div class = "main">
       <div class="container">
 		     <div class="row text-center">
+            
+            {% if not consultations %}
+            <div class="col"> <p> No ongoing consultations </p> </div>
+            {%endif%}
             {% if consultations.0 %}
              <div class="col">
                <div class="patient1">
@@ -60,6 +64,7 @@
               </div>
             </div>
             {% endif %}
+            
             {% if consultations.1 %}
             <div class="col">
               <div class="patient2">

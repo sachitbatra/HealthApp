@@ -37,7 +37,7 @@ def search_doctor(request):
             consultations = Consultation.objects.filter(doctor_id = doctor.id)
             #print(doctor.name)
             if consultations:
-                if not [consultation for consultation in consultations if consultation.ongoing]:
+                if len([consultation for consultation in consultations if consultation.ongoing]) < active_consultations_allowed:
                     final_list.append(doctor)
             else:
                 final_list.append(doctor)

@@ -1,7 +1,7 @@
 {% extends 'form_base.html' %}
 
 {% load crispy_forms_tags %}
-
+{%block heading %} Create Profile{%endblock%}
 {% block content %}
   <form action="{% url 'doctor_core:create_profile' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}

@@ -11,4 +11,5 @@ urlpatterns = [
     path('previous_consultations/',views.view_past_consultations,name='previous_consultations'),
     path('feedback/',views.view_feedback,name='feedback'),
     path('stats/',views.view_stats,name='stats'),
+    path('post_consultation/',views.view_post_consultation,name='post_consultation'),
 ]

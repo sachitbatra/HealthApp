@@ -54,10 +54,10 @@
 <div class="container-fluid text-center" style="height:100%">    
   <div class="row content" style="height:100%">
    <div class="col-sm-2 sidenav"style="background-color:black;">
-      <p><a href="notifications.html" target="iframe" class="link" >Notifications</a></p>
-      <p><a href="bookAppointment.html" target="iframe" class="link" >Book an Appointment</a></p>
-      <p><a href="updatePatientInformation.html" target="iframe" class="link">Update Profile</a></p>
-       <p><a href="index.html">Sign Out</a></p>
+      <p><a href="{% url 'user_core:search'%}" target="iframe" class="link" >Search for doctors</a></p>
+      <p><a href="{% url 'consultation:ongoing_consultations'%}" target="iframe" class="link" >Current Consultations</a></p>
+      <p><a href="{% url 'consultation:past_consultations'%}" target="iframe" class="link">Past Consultations</a></p>
+       <p><a href="{%url 'logout'%}">Sign Out</a></p>
     </div>
     <div class="col-sm-10 "> 
     <!--nnnnn-->

@@ -25,10 +25,10 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 	<!--Custom styles-->
-	<link rel="stylesheet" type="text/css" href="/static/css/loginStyles.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/loginStyles.css?1">
 </head>
 
-<body style="background-image: url('/static/img/login_background.jpg')">
+<body style="background-image: url('/static/img/signupbg.jpg')">
 	
 	
           <div class="container">     
@@ -36,7 +36,7 @@
           <header id="header" >
           		<div class="container-fluid">
           			<div id="logo" class="pull-left">
-          				<h1><a href="#intro" class="scrollto">AppName</a></h1>
+          				<h1><a href="#intro" class="scrollto">HealthAssist</a></h1>
           			</div>
           		</div>
           	</header>
@@ -44,23 +44,30 @@
 		<div class="d-flex justify-content-center h-100">
 			<div class="card">
 				<div class="card-header">
-					<h3>Log In </h3>
+					<h3>Register </h3>
 				</div>
 				<div class="card-body">
 						<div>
 								{{ message }}
 						</div>
-					<form method="POST" action = "{%url 'user_login'%}">
+					<form method="POST" action = "{%url 'user_signup'%}">
 							{% csrf_token %}
 						<div class="input-group form-group">
-							<input id="email" type="text" class="form-control" placeholder="email id" name="email_address" value={{ email_address }}>
+                            
+                            <input id="name" type="text" class="form-control" placeholder="Name" name="name" value="{{ signup_form.name }}">
 						</div>
 						<div class="input-group form-group">
-							
-							<input id="password" class="form-control" placeholder="password" type="password" name="password" value={{ password }}>
-						</div>
+                                <input id="email" type="text" class="form-control" placeholder="email id" name="email_address" value="{{ signup_form.email_address }}">
+                        </div>
+                        <div class="input-group form-group">
+                                <input id="password" class="form-control" placeholder="password" type="password" name="password" value="{{ signup_form.password }}">
+                        </div>
+                        <div class="input-group form-group">
+                                <label for="dateOfBirth">Date of Birth: </label>
+                                <input id="dateOfBirth" class="form-control" type="date" name="dateOfBirth" value="{{ signup_form.dateOfBirth|date:"Y-m-d"}}">
+                        </div>
 						<div class="form-group">
-							<input type="submit" value="Login" class="btn float-center login_btn">
+							<input type="submit" value="Register" class="btn float-center login_btn">
 						</div> 
 
 						
@@ -68,11 +75,9 @@
 
 					</form>
 					<div class="card-footer">
-							<div class="d-flex justified-content-center links">
-								Don't have an account?<a href="{% url 'user_signup'%}">Sign Up</a>
-							</div>
-							<br>
-							<br>
+							<!-- <div class="d-flex justified-content-center links">
+								Don't have an account?<a href="signUpPatient.html">Sign Up</a>
+							</div> -->
 							{% if messages %}
 								<ul class="messages">
 									{% for message in messages %}

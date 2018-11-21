@@ -1,14 +1,21 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.http import HttpResponse
-from .forms import CreateProfile
+from .forms import CreateProfile,CreatePostConsultation,CreateFeedBack
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import render
+from django.shortcuts import render,reverse
 # Create your views here.
 from authentication.views import check_doc_token_validation,get_doctor
-
+import urllib
 from authentication.models import DoctorModel
 from .models import DoctorProfile,Consultation,FeedBack
+
+def redirect_params(url, params=None):
+    response = redirect(url)
+    if params:
+        query_string = urllib.parse.urlencode(params)
+        response['Location'] += '?' + query_string
+    return response
 
 def signed_in(request):
     logged_in = check_doc_token_validation(request)
@@ -114,6 +121,10 @@ def view_past_consultations(request):
             return HttpResponse("Looks like something went wrong!")
         consultations = Consultation.objects.filter(doctor_id = doctor.id)
         past_consultations_list = [consultation for consultation in consultations if not consultation.ongoing]
+        for consultation in past_consultations_list:
+            if not consultation.ended:
+                params = {'id':consultation.id}
+                return redirect_params(reverse('doctor_core:post_consultation'),params)
         paginator = Paginator(past_consultations_list,5)
         page = request.GET.get('page')
         past_consultations = paginator.get_page(page)
@@ -142,3 +153,24 @@ def view_stats(request):
         except:
             return logged_in
         return render(request,"statistic.html")
+def view_post_consultation(request):
+    id = int(request.GET.get("id"))
+    consultation = Consultation.objects.filter(id = id).first()
+    error = None
+    #print(consultation)
+    if request.method == "GET":
+        consultation_form = CreatePostConsultation()
+        #print(id)
+    if request.method == "POST":
+        consultation_form = CreatePostConsultation(request.POST or None)
+        if consultation_form.is_valid():
+            if consultation_form.cleaned_data["diagnosis"] and consultation_form.cleaned_data["notes"]: 
+                #print(consultation_form.cleaned_data["diagnosis"])
+                consultation.diagnosis = consultation_form.cleaned_data["diagnosis"]
+                consultation.notes = consultation_form.cleaned_data["notes"]
+                consultation.ended = True
+                consultation.save()
+                return redirect('/doctor/previous_consultations')
+            else:
+                error = "Please fill in all the details"
+    return render(request,"post_consultation_form.html",{'form':consultation_form,'consultation':consultation,'error':error})
