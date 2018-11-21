@@ -1,0 +1,32 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+  <h3>Schedule Form</h3>
+  <p>
+    <a href="{% url 'schedule' %}" class="btn btn-primary">Add a new Schedule</a>
+  </p>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Schedule Name</th>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for schd in scheds %}
+        <tr>
+          <td>{{schd.name}}</td>
+          <td>{{ schd.starttime }}</td>
+          <td>{{ schd.endtime}}</td>
+          <td><a href="{% url 'schedule' schd.id %}" class="btn btn-primary">Add Routine</a></td>
+          <td><a href="{% url 'view_rtns' schd.id %}" class="btn btn-primary">View Routines</a></td>
+        </tr>
+      {% empty %}
+        <tr class="table-active">
+          <td colspan="3">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
