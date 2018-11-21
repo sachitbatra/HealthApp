@@ -27,6 +27,17 @@ class DoctorProfile(models.Model):
         return FeedBack.objects.filter(consultation__doctor_id=self.user.id).aggregate(Avg('overall_rating'))
 
 
+def consultation_count(doctor_id):
+    consult_list = Consultation.objects.filter(doctor=doctor_id).distinct()
+    count = 0
+
+    for consultation in consult_list:
+        if consultation.ongoing:
+            count += 1
+
+    return count
+
+
 class Consultation(models.Model):
     doctor = models.ForeignKey(DoctorModel, on_delete=models.CASCADE, related_name='doctor')
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='patient')
