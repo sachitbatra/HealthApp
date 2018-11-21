@@ -24,9 +24,10 @@ def schedule_form(request):
         form = ScheduleForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
+            date = form.cleaned_data["date"]
             time_from = form.cleaned_data["endtime"]
             time_to = form.cleaned_data["starttime"]
-            new_sched = Schedule(user=user,name=name,starttime=time_from,endtime=time_to)
+            new_sched = Schedule(user=user,name=name,date=date,starttime=time_from,endtime=time_to)
             new_sched.save()
             messages.info(request, 'Added new Schedule')
             return HttpResponseRedirect('/fitness/view_schd')
