@@ -17,6 +17,7 @@
       {% for schd in scheds %}
         <tr>
           <td>{{schd.name}}</td>
+          <td>{{schd.date}}</td>
           <td>{{ schd.starttime }}</td>
           <td>{{ schd.endtime}}</td>
           <td><a href="{% url 'schedule' schd.id %}" class="btn btn-primary">Add Routine</a></td>
