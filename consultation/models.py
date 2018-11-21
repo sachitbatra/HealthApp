@@ -61,3 +61,9 @@ class ChatMessage(models.Model):
     user = models.ForeignKey(AppUser, verbose_name='sender', on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class GoogleFitVisualisation(models.Model):
+    user = models.ForeignKey(AppUser, verbose_name='sender', on_delete=models.CASCADE)
+    email_id = models.CharField(max_length=255)
+    health_data_file = models.FileField(upload_to='GoogleFitData')
+    health_data_url = models.CharField(max_length=255)
