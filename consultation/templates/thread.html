@@ -6,30 +6,32 @@
 {% for chat in object.chatmessage_set.all %}
 {%if curUser == chat.user.email_address%}
 
-<!-- <li>{{ chat.message }} via {{ chat.user }}</li> -->
-
 <div class="container">
     <img src="/static/img/user2.jpeg" alt="Avatar" >
     <p>{{ chat.message }} </p>
     <span class="time-right text-body">{{ chat.user }}</span>
   </div>
+
 {%else%}
 
-<!-- <li>{{ chat.message }} via {{ chat.user }}</li> -->
 <div class="container darker">
     <img src="/static/img/user.png" alt="Avatar" class="right">
     <p>{{ chat.message }}</p>
     <span class="time-left text-body">{{ chat.user }}</span>
-  </div>
-{%endif%}
+</div>
 
+{%endif%}
 {% endfor %}
 </ul>
 
+    {% if valid %}
 <form id='form' method='POST'> {% csrf_token %}
 {{form.as_p }}
 <input type='submit' class='btn btn-primary'/>
 </form>
+    {% else %}
+        <p>Please Register a Consultation to send Messages.</p>
+    {% endif %}
 
 {% endblock %}
 
@@ -38,13 +40,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
 
 <script>
-    console.log(window.location);
     $('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
 
     var curUser = "{{curUser}}";
-    console.log(curUser);
     var wsStart = "ws://" + window.location.host + window.location.pathname;
-    var socket = new WebSocket(wsStart);
+    var socket = new ReconnectingWebSocket(wsStart);
 
     var formData = $("#form");
     var msgInput = $("#id_message");

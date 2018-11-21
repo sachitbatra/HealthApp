@@ -40,7 +40,7 @@ def view_profile(request):
             doctor = get_doctor(request)
         except:
             return HttpResponse("Looks like something went wrong!")
-    profile =   DoctorProfile.objects.filter(user_id = doctor.id).first()
+    profile = DoctorProfile.objects.filter(user_id = doctor.id).first()
     if profile:
         return render(request,"success.html",{'profile':profile})
     else:
