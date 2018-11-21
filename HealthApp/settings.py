@@ -84,7 +84,7 @@ ASGI_APPLICATION = "HealthApp.routing.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'healthdatabase',
+        'NAME': 'healthdb',
         'USER': 'root',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
