@@ -56,9 +56,9 @@
                    <p id ="Patient1_Info"> Info : </p>
                    <p id ="ChatNowButton1"> 
                       {% if is_user %}
-                      <a href="http://localhost:8000/consultations/{{consultations.0.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
+                      <a href= "/consultations/{{consultations.0.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
                       {%else%}
-                      <a href="http://localhost:8000/consultations/{{consultations.0.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
+                      <a href= "/consultations/{{consultations.0.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
                       {%endif%}
                   </p>
               </div>
@@ -74,9 +74,9 @@
                 <p id ="Patient2_Info"> Info : </p>
                 <p id ="ChatNowButton2"> 
                     {% if is_user %}
-                    <a href="http://localhost:8000/consultations/{{consultations.1.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
+                    <a href="/consultations/{{consultations.1.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
                     {%else%}
-                    <a href="http://localhost:8000/consultations/{{consultations.1.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
+                    <a href="/consultations/{{consultations.1.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
                     {%endif%}
                 </p>
              </div>
@@ -91,31 +91,33 @@
                <p id ="Patient3_Info"> Info : </p>
                <p id ="ChatNowButton3"> 
                   {% if is_user %}
-                  <a href="http://localhost:8000/consultations/{{consultations.2.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
+                  <a href="/consultations/{{consultations.2.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
                   {%else%}
-                  <a href="http://localhost:8000/consultations/{{consultations.2.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
+                  <a href="/consultations/{{consultations.2.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
                   {%endif%}
                </p>
             </div>
           </div>
           {%endif%}
+
           {%if consultations.3%}
           <div class="col">
             <div class="patient4">
                 <p id ="Patient4_Name"> Patient :  {{consultations.4.user}}  <br>
-                  Doctor : {{consultations.4.doctor}}
+                  Doctor : {{consultations.3.doctor}}
                 </p>
               <p id ="Patient4_Info"> Info : </p>
               <p id ="ChatNowButton4"> 
                   {% if is_user %}
-                  <a href="http://localhost:8000/consultations/{{consultations.3.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
+                  <a href="/consultations/{{consultations.3.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
                   {%else%}
-                  <a href="http://localhost:8000/consultations/{{consultations.3.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
+                  <a href="/consultations/{{consultations.3.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
                   {%endif%}
               </p>
            </div>
          </div>
          {%endif%}
+             
          {%if consultations.4%}
          <div class="col">
            <div class="patient5">
@@ -125,9 +127,9 @@
              <p id ="Patient5_Info"> Info : </p>
              <p id ="ChatNowButton5"> 
                 {% if is_user %}
-                <a href="http://localhost:8000/consultations/{{consultations.4.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
+                <a href="/consultations/{{consultations.4.doctor.email_address}}/" class="btn btn-primary">Go to chat</a>
                 {%else%}
-                <a href="http://localhost:8000/consultations/{{consultations.4.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
+                <a href="/consultations/{{consultations.4.user.email_address}}/" class="btn btn-primary">Go to Chat</a>
                 {%endif%}
              </p>
           </div>

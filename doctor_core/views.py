@@ -10,12 +10,14 @@ import urllib
 from authentication.models import DoctorModel
 from .models import DoctorProfile,Consultation,FeedBack
 
+
 def redirect_params(url, params=None):
     response = redirect(url)
     if params:
         query_string = urllib.parse.urlencode(params)
         response['Location'] += '?' + query_string
     return response
+
 
 def signed_in(request):
     logged_in = check_doc_token_validation(request)
@@ -28,6 +30,7 @@ def signed_in(request):
             return HttpResponse("Looks like something went wrong!")
         return render(request,"dashboard.html",{"doctor":doctor})
     return HttpResponse("Looks like something went wrong!")
+
 
 def view_profile(request):
     logged_in = check_doc_token_validation(request)
@@ -42,6 +45,7 @@ def view_profile(request):
         return render(request,"success.html",{'profile':profile})
     else:
         return redirect('/doctor/create_profile')
+
 
 def create_profile(request):
     if request.method == 'GET':
@@ -65,6 +69,7 @@ def create_profile(request):
             #return redirect('/error', message="Invalid Data Submitted")  # TODO: Create Error HTML File
             return render(request,'error.html',{'message':"Invalid Data Submitted"})
     return render(request,'profile_creation.html',{'form':profile_form})
+
 
 def edit_profile(request):
     if request.method == 'GET':
@@ -96,7 +101,8 @@ def edit_profile(request):
         profile.save()
         response = redirect('/doctor/edit_profile')
         return response
-    return render(request,"profile_edit.html",{'form':profile_form,'profile':profile})
+    return render(request, "profile_edit.html", {'form':profile_form, 'profile':profile})
+
 
 def view_ongoing_consultations(request):
     logged_in = check_doc_token_validation(request)
@@ -109,7 +115,8 @@ def view_ongoing_consultations(request):
             return HttpResponse("Looks like something went wrong!")
         consultations = Consultation.objects.filter(doctor_id = doctor.id)
         ongoing_consultations = [consultation  for consultation in consultations if consultation.ongoing]
-        return render(request,"current_consultations.html",{'consultations':ongoing_consultations})
+        return render(request, "current_consultations.html", {'consultations':ongoing_consultations})
+
 
 def view_past_consultations(request):
     logged_in = check_doc_token_validation(request)
@@ -130,6 +137,7 @@ def view_past_consultations(request):
         past_consultations = paginator.get_page(page)
         return render(request,"past_consultations.html",{'consultations':past_consultations})
 
+
 def view_feedback(request):
     logged_in = check_doc_token_validation(request)
     doctor = None
@@ -144,6 +152,7 @@ def view_feedback(request):
         feedback = paginator.get_page(page)
         return render(request, "review.html",{'reviews':feedback})
 
+
 def view_stats(request):
     logged_in = check_doc_token_validation(request)
     doctor = None
@@ -153,6 +162,8 @@ def view_stats(request):
         except:
             return logged_in
         return render(request,"statistic.html")
+
+
 def view_post_consultation(request):
     id = int(request.GET.get("id"))
     consultation = Consultation.objects.filter(id = id).first()

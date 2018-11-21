@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.db.models import Q
@@ -41,7 +41,7 @@ def search_doctor(request):
                     final_list.append(doctor)
             else:
                 final_list.append(doctor)
-    return render(request,"bookAppointment.html",{'doctors':final_list})
+    return render(request, "bookAppointment.html", {'doctors':final_list})
 
 def go_to_chat(request):
     print(request.GET.get("doctor_id"))
@@ -57,8 +57,4 @@ def go_to_chat(request):
             return logged_in
     new_consultation = Consultation(doctor = doctor,user = user,no_days = 1)
     new_consultation.save()
-    return redirect("http://localhost:8000/consultations/" + doctor.email_address + "/")
-
-
-
-    
+    return HttpResponseRedirect("consultations/" + doctor.email_address + "/")
