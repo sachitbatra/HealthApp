@@ -6,15 +6,16 @@ class Schedule(models.Model):
 
     user= models.ForeignKey(UserModel,on_delete=models.CASCADE)
     name = models.CharField(max_length = 100,default = "untitled")
-    starttime = models.DateTimeField()
-    endtime = models.DateTimeField()
+    date = models.DateField()
+    starttime = models.TimeField()
+    endtime = models.TimeField()
     # day = models.CharField(max_length = 15,default = "Monday")
 
     def __str__(self):
-        return self.user + ":" + self.starttime + ":" + self.endtime + ":" + self.day
+        return self.user + ":" + self.date + ":" + self.starttime + ":" + self.endtime
 
     # class Meta:
-    #     unique_together = ('user','day',)
+    #      unique_together = ('user','starttime','endttime')
 
 class Exercise(models.Model):
     #rtn = models.ForeignKey(Routines,on_delete = models.CASCADE)
