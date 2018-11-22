@@ -1,0 +1,20 @@
+{% extends 'form_base.html' %}
+
+{% load crispy_forms_tags %}
+{%block heading %} Details regarding your recent Consultation : {%endblock%}
+{% block content %}
+{% if consultation %}
+    <h2>Patient Name : {{consultation.user}}</h2>
+    <h2>Date : {{consultation.created_on}}</h2>
+    {% if error %}
+    <div class="text-danger">
+        {{error}}
+    </div>
+    {%endif%}
+  <form action="{% url 'doctor_core:post_consultation'%}?id={{consultation.id}}" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+  {%endif%}
+{% endblock %}

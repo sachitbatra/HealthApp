@@ -1,0 +1,70 @@
+
+.counter1 {
+    left :50px;
+    background-color:#18d35e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+.counter2 {
+    left :300px;
+    background-color:#18d36e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+.counter3 {
+    left :550px;
+    background-color:#18d37e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+
+.counter4 {
+    left :800px;
+    background-color:#18d38e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+
+#chart_div {
+  position: relative;
+  top: 200px;
+  left: 250px;
+  height: 300px;
+  width: 500px;
+}
+
+
+.count-title {
+    font-size: 50px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.count-text {
+    font-size: 20px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-2x {
+    margin: 0 auto;
+    float: none;
+    display: table;
+    color: #FFFFFF;
+}

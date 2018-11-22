@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Health And Fitness Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="/static/css/patientDashboard.css?1" rel="stylesheet">
+  
+   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">App Name</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome ABC!</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center" style="height:100%">    
+  <div class="row content" style="height:100%">
+   <div class="col-sm-2 sidenav"style="background-color:black;">
+      <p><a href="{% url 'user_core:search'%}" target="iframe" class="link" >Search for doctors</a></p>
+      <p><a href="{% url 'consultation:ongoing_consultations'%}" target="iframe" class="link" >Current Consultations</a></p>
+      <p><a href="{% url 'consultation:past_consultations'%}" target="iframe" class="link">Past Consultations</a></p>
+       <p><a href="{%url 'logout'%}">Sign Out</a></p>
+    </div>
+    <div class="col-sm-10 "> 
+    <!--nnnnn-->
+     <div class="row">
+ 
+     	<div class="col-sm-12 ">
+     	<div  class="main">
+     	<iframe src="{% url 'user_core:search'%}" id="if" name="iframe" >
+     	</iframe>
+     	 
+     	</div>
+     	
+     	</div>
+     </div>
+     <!-- nnnnn-->
+    </div>
+ 
+  </div>
+
+
+</div>
+
+  <footer class="container-fluid text-center">
+ <footer class="container-fluid text-center">
+  <h4 text-align="center">Contact Us</h4><br>
+  <B> Address :</B> <adress> A108 Adam Street, NY 535022, USA</address>&nbsp&nbsp&nbsp
+  <B> Phone Number:</B> <a href="tel:+155895548855"  style="color: white">+1 5589 55488 55</a>
+  &nbsp&nbsp&nbsp 
+  <B> E-mail ID: </B> <a href="mailto:info@example.com" style="color: white">info@example.com</a
+  
+  
+  
+
+</footer> 
+</body>
+
+
+</html>
+

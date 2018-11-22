@@ -5,17 +5,17 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from django.views.generic import DetailView, ListView
 
-from authentication.models import UserSessionToken, DoctorSessionToken
-from authentication.views import check_session_cookie, check_token_ttl, get_abstract_user
+from authentication.views import get_abstract_user
 
 from .forms import ComposeForm
 from .models import Thread, ChatMessage
 
 from authentication.models import *
-
+from doctor_core.models import Consultation
 
 class InboxView(ListView):
     template_name = 'inbox.html'
@@ -72,7 +72,26 @@ class ThreadView(FormMixin, DetailView):
         if get_abstract_user(self.request) is not None:
             curUser = get_abstract_user(self.request)
             context['curUser'] = curUser.email_address
+
+        if curUser is not None:
+            other_username = self.kwargs.get("username")
+            if type(curUser) is UserModel:
+                other_user = DoctorModel.objects.filter(email_address=other_username).first()
+                consultations = Consultation.objects.filter(doctor=other_user, user=curUser)
+
+            else:
+                other_user = UserModel.objects.filter(email_address=other_username).first()
+                consultations = Consultation.objects.filter(user=other_user, doctor=curUser)
+
+            valid = False
+            for cur_consult in consultations:
+                if cur_consult.ongoing:
+                    valid = True
+                    break
+            context['valid'] = valid
+
         return context
+
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -107,3 +126,29 @@ def select_doctor(request):
     print("IDS ARE",[i for i in ids])
     args = {'query' :query, 'ids':ids}
     return render(request, 'select_doctor.html' ,args)
+
+def ongoing_consultations(request):
+    user = get_abstract_user(request)
+    consultations = None
+    isUser = None
+    if user:
+        if type(user) == UserModel:
+            consultations = Consultation.objects.filter(user_id = user.id)
+            isUser = True
+        else:
+            consultations = Consultation.objects.filter(doctor_id = user.id)
+        ongoing_consultations = [consultation  for consultation in consultations if consultation.ongoing]
+        return render(request,"current_consultations.html",{'consultations':ongoing_consultations,'is_user':isUser})
+def past_consultations(request):
+    user = get_abstract_user(request)
+    consultations = None
+    if user:
+        if type(user) == UserModel:
+            consultations = Consultation.objects.filter(user_id = user.id)
+        else:
+            consultations = Consultation.objects.filter(doctor_id = user.id)
+    past_consultations_list = [consultation for consultation in consultations if not consultation.ongoing]
+    paginator = Paginator(past_consultations_list,5)
+    page = request.GET.get('page')
+    past_consultations = paginator.get_page(page)
+    return render(request,"past_consultations.html",{'consultations':past_consultations})

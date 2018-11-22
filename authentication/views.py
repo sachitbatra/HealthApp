@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from .forms import *
 from .models import *
 from django.utils import timezone
@@ -75,7 +75,7 @@ def user_signup_view(request):
                 return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         signup_form = UserSignUpForm()
-        return render(request, 'UserRegister.html', {'form': signup_form})
+        return render(request, 'userSignUp.html', {'form': signup_form})
 
     elif request.method == "POST":
         signup_form = UserSignUpForm(request.POST)
@@ -94,7 +94,7 @@ def user_signup_view(request):
 
         else:
             messages.error(request, 'Invalid Data Submitted')
-            return HttpResponseRedirect('/error')
+            return HttpResponseRedirect('/signup')
 
 
 def user_login_view(request):
@@ -110,7 +110,7 @@ def user_login_view(request):
                 return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         login_form = LogInForm()
-        return render(request, 'UserLogin.html', {'form': login_form})
+        return render(request, 'login.html', {'form': login_form})
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)
@@ -128,7 +128,7 @@ def user_login_view(request):
                     session_token.save()
 
                     request.session['session_token'] = session_token.session_token  # Using Session Middleware
-                    response = redirect('success.html')  # TODO: DashBoard
+                    response = redirect('/user/signed_in')  # TODO: DashBoard
                     # response.set_cookie(key="session_token", value=session_token.session_token)
                     return response  # TODO: Redirect to User Dashboard
                 else:
@@ -239,7 +239,7 @@ def doc_login_view(request):
                 return HttpResponseRedirect('/error')  # TODO: Replace with Homepage
 
         login_form = LogInForm()
-        return render(request, 'DocLogin.html', {'form': login_form})
+        return render(request, 'docLogin.html', {'form': login_form})
 
     elif request.method == "POST":
         login_form = LogInForm(request.POST)
@@ -274,9 +274,30 @@ def doc_login_view(request):
 
 def logout_view(request):
     if request.method == "GET":
+        redirect_url = None
+        try:
+            logged_in = check_user_token_validation(request)
+            if logged_in:
+                try:
+                    user = get_user(request)
+                    redirect_url = '/login'
+                except:
+                    return HttpResponseRedirect('/login')
+
+        except:
+            try:
+                logged_in = check_doc_token_validation(request)
+                if logged_in:
+                    try:
+                        doctor = get_doctor(request)
+                        redirect_url = '/doc/login'
+                    except:
+                        return HttpResponseRedirect('/doc/login')
+            except:
+                return HttpResponse("something went wrong")
         del request.session['session_token']
         request.session.modified = True
-        return HttpResponseRedirect('/login')
+        return HttpResponseRedirect(redirect_url)
     else:
         raise Http404
 

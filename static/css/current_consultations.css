@@ -1,0 +1,62 @@
+li {
+  color: white;
+}
+.patient1 {
+    left :50px;
+    background-color:#18d35e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+.patient2 {
+    left :300px;
+    background-color:#18d36e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+.patient3 {
+    left :550px;
+    background-color:#18d37e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+
+.patient4 {
+    left :800px;
+    background-color:#18d38e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+
+.patient5 {
+    left :300px;
+    top : 300px;
+    background-color:#18d31e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}
+
+.patient6 {
+    left :550px;
+    top : 300px;
+    background-color:#18d30e;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    position:fixed;
+
+}

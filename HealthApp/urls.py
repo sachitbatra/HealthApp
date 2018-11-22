@@ -22,22 +22,25 @@ from authentication.views import *
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    url('doc/signup', doc_signup_view),
-    url('doc/login', doc_login_view),
+    url('doc/signup', doc_signup_view,name='doc_signup'),
+    url('doc/login', doc_login_view,name='doc_login'),
     #url('doc', doc_signup_view),
-    url('^login', user_login_view),
-    url('^signup', user_signup_view),
-    url('^logout', logout_view),
+    url('^login', user_login_view,name='user_login'),
+    url('^signup', user_signup_view,name='user_signup'),
+    url('^logout', logout_view,name='logout'),
     url('^verification', verify_doctor),
     url('^error/', error_view),
     url(r'^api/user', UserOperations.as_view()),
     #url('', user_signup_view),  # Replace With HomePage
     url('doctor/',include("doctor_core.urls")),
-    url('consultation/', include('consultation.urls')),
+    url('consultations/', include('consultation.urls')),
     path('admin/', admin.site.urls),
+    url('user/',include("user_core.urls")),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

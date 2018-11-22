@@ -7,4 +7,9 @@ urlpatterns = [
     path('view_profile/',views.view_profile,name='view_profile'),
     path('create_profile/',views.create_profile,name='create_profile'),
     path('edit_profile/',views.edit_profile,name='edit_profile'),
+    path('ongoing_consultations/',views.view_ongoing_consultations,name='ongoing_consultations'),
+    path('previous_consultations/',views.view_past_consultations,name='previous_consultations'),
+    path('feedback/',views.view_feedback,name='feedback'),
+    path('stats/',views.view_stats,name='stats'),
+    path('post_consultation/',views.view_post_consultation,name='post_consultation'),
 ]
