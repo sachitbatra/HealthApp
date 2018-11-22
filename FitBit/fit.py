@@ -19,18 +19,29 @@ today = datetime.datetime.now()
 
 for i in range(7,12):
     dom = (today - datetime.timedelta(days=i)).strftime("%Y-%m-%d")
+    d.append(dom)
     calorie_count = auth2_client.intraday_time_series('activities/tracker/calories', base_date=dom)
     fit_statsHR_heart = auth2_client.intraday_time_series('activities/heart', base_date=dom, detail_level='1min')
     acti = auth2_client.activities(dom)
-    print(" ")
-    print("Calorie Count: ",calorie_count['activities-tracker-calories'][0]['value'])
-    print("HeartRate-FatBurn-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['max'], 
-	"MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['min'])
-    print("HeartRate-Cardio-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['max'],
-	"MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['min'])
-    print("HeartRate-Peak-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['max'],
-	"MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['min'])	
-	print("HeartRate-Resting: ", fit_statsHR_heart['activities-heart']['restingHeartRate'])
-	print("Distance: ",acti['summary']['distances'][0]['distance'])
-    print("Steps: ",acti['summary']['steps'])
+    # print(dom)
+    # print("Calorie Count: ",calorie_count['activities-tracker-calories'][0]['value'])
+    calorie.append(calorie_count['activities-tracker-calories'][0]['value'])
+    fatBurnMAX.append(fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['max'])
+    fatBurnMIN.append(fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['min'])
+    # print("HeartRate-FatBurn-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['max'], 
+	# "MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['min'])
+    cardioMAX.append(fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['max'])
+    cardioMIN.append(fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['min'])
+    # print("HeartRate-Cardio-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['max'],
+	# "MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['min'])
+    peakMAX.append(fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['max'])
+    peakMIN.append(fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['min'])
+    # print("HeartRate-Peak-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['max'],
+	# "MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['min'])	
+    rest.append(fit_statsHR_heart['activities-heart'][0]['value']['restingHeartRate'])
+    # print("HeartRate-Resting: ", fit_statsHR_heart['activities-heart'][0]['value']['restingHeartRate'])
+    dist.append(acti['summary']['distances'][0]['distance'])
+    # print("Distance: ",acti['summary']['distances'][0]['distance'])
+    steps.append(acti['summary']['steps'])
+    # print("Steps: ",acti['summary']['steps'])
 
