@@ -24,10 +24,13 @@ for i in range(7,12):
     acti = auth2_client.activities(dom)
     print(" ")
     print("Calorie Count: ",calorie_count['activities-tracker-calories'][0]['value'])
-    print("HeartRate : FatBurn: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['max'])
-    print("HeartRate : Cardio: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['max'])
-    print("HeartRate : Peak: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['max'])	
-	print("HeartRate : Resting: ", fit_statsHR_heart['activities-heart']['restingHeartRate'])
+    print("HeartRate-FatBurn-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['max'], 
+	"MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['min'])
+    print("HeartRate-Cardio-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['max'],
+	"MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['min'])
+    print("HeartRate-Peak-MAX: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['max'],
+	"MIN: ", fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['min'])	
+	print("HeartRate-Resting: ", fit_statsHR_heart['activities-heart']['restingHeartRate'])
 	print("Distance: ",acti['summary']['distances'][0]['distance'])
     print("Steps: ",acti['summary']['steps'])
 
