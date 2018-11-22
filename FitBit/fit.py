@@ -17,6 +17,18 @@ auth2_client = fitbit.Fitbit(CLIENT_ID, CLIENT_SECRET,
 
 today = datetime.datetime.now()
 
+calorie = list()
+fatBurnMAX = list()
+fatBurnMIN = list()
+cardioMAX = list()
+cardioMIN = list()
+peakMAX=list()
+peakMIN=list()
+rest = list()
+steps =list()
+dist = list()
+d = list()
+
 for i in range(7,12):
     dom = (today - datetime.timedelta(days=i)).strftime("%Y-%m-%d")
     d.append(dom)
