@@ -11,19 +11,23 @@ server.browser_authorize()
 
 ACCESS_TOKEN = str(server.fitbit.client.session.token['access_token'])
 REFRESH_TOKEN = str(server.fitbit.client.session.token['refresh_token'])
-a2c = fitbit.Fitbit(CLIENT_ID, CLIENT_SECRET, 
+auth2_client = fitbit.Fitbit(CLIENT_ID, CLIENT_SECRET, 
         oauth2=True, access_token=ACCESS_TOKEN, 
         refresh_token=REFRESH_TOKEN)
 
 today = datetime.datetime.now()
-dom = (today - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-fit_statsHR = a2c.intraday_time_series('activities/heart', base_date=dom, detail_level='1sec')
 
-print(act = a2c.activities())
-
-# for i in range(1,8):
-# 	dom = (today - datetime.timedelta(days=i)).strftime("%Y-%m-%d")
-# 	print(dom)
-# 	fit_statsHR = auth2_client.intraday_time_series('activities/heart', base_date=dom, detail_level='1sec')
-# 	print(auth2_client.activities())
+for i in range(7,12):
+    dom = (today - datetime.timedelta(days=i)).strftime("%Y-%m-%d")
+    calorie_count = auth2_client.intraday_time_series('activities/tracker/calories', base_date=dom)
+    fit_statsHR_heart = auth2_client.intraday_time_series('activities/heart', base_date=dom, detail_level='1min')
+    acti = auth2_client.activities(dom)
+    print(" ")
+    print("Calorie Count: ",calorie_count['activities-tracker-calories'][0]['value'])
+    print("HeartRate : FatBurn: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][1]['max'])
+    print("HeartRate : Cardio: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][2]['max'])
+    print("HeartRate : Peak: ",fit_statsHR_heart['activities-heart'][0]['value']['heartRateZones'][3]['max'])	
+	print("HeartRate : Resting: ", fit_statsHR_heart['activities-heart']['restingHeartRate'])
+	print("Distance: ",acti['summary']['distances'][0]['distance'])
+    print("Steps: ",acti['summary']['steps'])
 
