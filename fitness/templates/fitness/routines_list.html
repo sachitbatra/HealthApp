@@ -1,0 +1,29 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+  <h3>Routines Form</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Exercise</th>
+        <th>Repetitions</th>
+        <th>Sets</th>
+        <th>Muscle Group</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rtn in rtns %}
+        <tr>
+          <td>{{ rtn.exc.name }}</td>
+          <td>{{ rtn.reps }}</td>
+          <td>{{ rtn.sets}}</td>
+          <td>{{rtn.exc.mg}}</td>
+        </tr>
+      {% empty %}
+        <tr class="table-active">
+          <td colspan="3">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
