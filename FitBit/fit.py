@@ -57,3 +57,39 @@ for i in range(7,12):
     steps.append(acti['summary']['steps'])
     # print("Steps: ",acti['summary']['steps'])
 
+plt.plot(d, calorie, color='g')
+plt.xlabel('Dates')
+plt.ylabel('Calorie Count')
+plt.title('Calorie comparison in the week')
+plt.show()
+
+#Distance
+
+plt.plot(d[::-1], dist, color='g')
+plt.xlabel('Dates')
+plt.ylabel('Distance Covered')
+plt.title('Distance covered in the week')
+plt.show()
+
+#Steps
+
+plt.plot(d, steps, color='g')
+plt.xlabel('Dates')
+plt.ylabel('Steps taken')
+plt.title('Steps taken in the week')
+plt.show()
+
+#heartrate
+
+plt.plot(d, heart_rate, color='g')
+#plt.plot(d, cardioMIN, color='orange')
+plt.xlabel('Dates')
+plt.ylabel('Heart rate Covered')
+plt.title('Heart rate in the week')
+plt.show()
+
+plt.plot(d, rest, color='g')
+plt.xlabel('Dates')
+plt.ylabel('Rest')
+plt.title('Rest taken in the week')
+plt.show()
